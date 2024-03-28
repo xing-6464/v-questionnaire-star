@@ -17,6 +17,7 @@
 import QuestionCard from '@/components/QuestionCard.vue'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { useTitle } from '@vueuse/core'
 const rawQuestionList = [
   {
     _id: 'q1',
@@ -46,6 +47,7 @@ const rawQuestionList = [
 
 const questionList = ref(rawQuestionList)
 const route = useRoute()
+useTitle('小星问卷 - 我的问卷')
 
 console.log(route.query.key)
 </script>
