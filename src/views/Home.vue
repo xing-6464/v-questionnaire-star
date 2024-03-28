@@ -1,7 +1,8 @@
 <template>
   <div>
+    <p>Home</p>
     <div>
-      <button @click="handelClick">登录</button>
+      <el-button @click="handelClick">登录</el-button>
     </div>
   </div>
 </template>
