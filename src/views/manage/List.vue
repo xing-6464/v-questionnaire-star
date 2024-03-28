@@ -16,6 +16,7 @@
 <script setup lang="ts">
 import QuestionCard from '@/components/QuestionCard.vue'
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 const rawQuestionList = [
   {
     _id: 'q1',
@@ -44,6 +45,9 @@ const rawQuestionList = [
 ]
 
 const questionList = ref(rawQuestionList)
+const route = useRoute()
+
+console.log(route.query.key)
 </script>
 
 <style scoped lang="scss">
