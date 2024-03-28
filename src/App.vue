@@ -1,9 +1,3 @@
-<script setup lang="ts">
-import List from './views/List.vue'
-</script>
-
 <template>
-  <List />
+  <router-view></router-view>
 </template>
-
-<style scoped></style>
