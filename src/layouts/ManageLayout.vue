@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import { h } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute, useRouter, RouterView } from 'vue-router'
 import { PlusOutlined, BarsOutlined, StarOutlined, DeleteOutlined } from '@ant-design/icons-vue'
 
 const router = useRouter()

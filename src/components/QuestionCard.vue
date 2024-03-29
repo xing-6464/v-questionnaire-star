@@ -15,19 +15,36 @@
     </div>
     <div class="button-container">
       <div class="left">
-        <button>编辑问卷</button>
-        <button>数据统计</button>
+        <el-button
+          :icon="h(EditOutlined)"
+          size="small"
+          @click="() => router.push(`/question/edit/${props.data._id}`)"
+        >
+          编辑问卷
+        </el-button>
+        <el-button
+          :icon="h(LineChartOutlined)"
+          size="small"
+          text
+          @click="() => router.push(`/question/stat/${props.data._id}`)"
+        >
+          数据统计
+        </el-button>
       </div>
       <div class="right">
-        <button>标星</button>
-        <button>复杂</button>
-        <button>删除</button>
+        <el-button>标星</el-button>
+        <el-button>复杂</el-button>
+        <el-button>删除</el-button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { h } from 'vue'
+import { useRouter } from 'vue-router'
+import { EditOutlined, LineChartOutlined } from '@ant-design/icons-vue'
+
 type PropsType = {
   data: {
     _id: string
@@ -38,8 +55,8 @@ type PropsType = {
     createdAt: string
   }
 }
-
 const props = defineProps<PropsType>()
+const router = useRouter()
 </script>
 
 <style scoped lang="scss">

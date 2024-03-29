@@ -6,17 +6,18 @@
     <div class="right">搜索</div>
   </div>
   <div class="content">
-    <template v-for="item in questionList" :key="item._id">
-      <QuestionCard :data="item" />
+    <template v-if="questionList.length > 0">
+      <template v-for="item in questionList" :key="item._id">
+        <QuestionCard :data="item" />
+      </template>
     </template>
   </div>
-  <div class="footer">footer</div>
+  <div class="footer">loadMore... 上滑加载更多...</div>
 </template>
 
 <script setup lang="ts">
 import QuestionCard from '@/components/QuestionCard.vue'
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
 import { useTitle } from '@vueuse/core'
 const rawQuestionList = [
   {
@@ -46,29 +47,9 @@ const rawQuestionList = [
 ]
 
 const questionList = ref(rawQuestionList)
-const route = useRoute()
 useTitle('小星问卷 - 我的问卷')
-
-console.log(route.query.key)
 </script>
 
 <style scoped lang="scss">
-.header {
-  display: flex;
-
-  .left {
-    flex: 1;
-  }
-
-  .right {
-    flex: 1;
-    text-align: right;
-  }
-}
-.content {
-  margin-bottom: 20px;
-}
-.footer {
-  text-align: center;
-}
+@import url(./common.scss);
 </style>

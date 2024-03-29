@@ -51,7 +51,7 @@ const router = createRouter({
           ]
         },
         {
-          path: '/:pathMatch(.*)*',
+          path: ':pathMatch(.*)*',
           component: NotFound
         }
       ]

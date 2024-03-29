@@ -9,7 +9,7 @@
       </div>
     </el-header>
     <el-main class="main">
-      <router-view />
+      <router-view></router-view>
     </el-main>
     <el-footer class="footer">小星问卷 &copy; 2024 - present. Created by 星</el-footer>
   </div>
@@ -18,6 +18,7 @@
 <script setup lang="ts">
 import Logo from '@/components/Logo.vue'
 import UserInfo from '@/components/UserInfo.vue'
+import { RouterView } from 'vue-router'
 </script>
 
 <style scoped lang="scss">
