@@ -2,9 +2,11 @@
   <div class="common-layout">
     <el-header class="header">
       <div class="left">
-        <Logo></Logo>
+        <Logo />
       </div>
-      <div class="right">登录</div>
+      <div class="right">
+        <UserInfo />
+      </div>
     </el-header>
     <el-main class="main">
       <router-view />
@@ -15,6 +17,7 @@
 
 <script setup lang="ts">
 import Logo from '@/components/Logo.vue'
+import UserInfo from '@/components/UserInfo.vue'
 </script>
 
 <style scoped lang="scss">
@@ -29,6 +32,7 @@ import Logo from '@/components/Logo.vue'
 
   .right {
     float: right;
+    line-height: 64px;
   }
 }
 
