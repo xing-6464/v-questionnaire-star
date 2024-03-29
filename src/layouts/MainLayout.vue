@@ -38,6 +38,7 @@ import UserInfo from '@/components/UserInfo.vue'
 
 .main {
   min-height: calc(100vh - 64px - 65px);
+  padding: 0;
 }
 
 .footer {

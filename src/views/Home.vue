@@ -1,20 +1,51 @@
 <template>
-  <div>
-    <p>Home</p>
-    <div>
-      <el-button @click="handelClick">登录</el-button>
+  <div class="container">
+    <div class="info">
+      <h1>问卷调查 | 在线投票</h1>
+      <p>已累计创建问卷 100 份，发布问卷 90 份，收到问卷 980 份</p>
+      <div>
+        <el-button type="primary" @click="() => router.push(MANAGE_INDEX_PATHNAME)"
+          >开始使用</el-button
+        >
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { MANAGE_INDEX_PATHNAME } from '@/router'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-
-function handelClick() {
-  router.push('/login')
-}
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+  min-height: calc(100vh - 64px - 65px);
+
+  .info {
+    text-align: center;
+
+    h1 {
+      font-size: 42px;
+      font-weight: 800;
+      // margin-bottom: 12px;
+    }
+
+    p {
+      margin: 24px 0;
+    }
+
+    button {
+      height: 60px;
+      font-size: 24px;
+      border-radius: 3px;
+    }
+  }
+}
+</style>
