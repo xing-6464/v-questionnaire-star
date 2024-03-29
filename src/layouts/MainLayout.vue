@@ -1,7 +1,9 @@
 <template>
   <div class="common-layout">
     <el-header class="header">
-      <div class="left">Logo</div>
+      <div class="left">
+        <Logo></Logo>
+      </div>
       <div class="right">登录</div>
     </el-header>
     <el-main class="main">
@@ -11,12 +13,15 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Logo from '@/components/Logo.vue'
+</script>
 
 <style scoped lang="scss">
 .header {
   padding: 0 24px;
   height: 64px;
+  background-color: #282c34;
 
   .left {
     float: left;
