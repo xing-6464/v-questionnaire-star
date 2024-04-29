@@ -8,7 +8,14 @@
   <div class="content">
     <template v-if="questionList.length > 0">
       <template v-for="item in questionList" :key="item._id">
-        <QuestionCard :data="item" />
+        <QuestionCard
+          :_id="item._id"
+          :answer-count="item.answerCount"
+          :created-at="item.createdAt"
+          :is-published="item.isPublished"
+          :is-star="item.isStar"
+          :title="item.title"
+        />
       </template>
     </template>
   </div>
@@ -17,8 +24,8 @@
 
 <script setup lang="ts">
 import QuestionCard from '@/components/QuestionCard.vue'
-import { ref } from 'vue'
 import { useTitle } from '@vueuse/core'
+import { ref } from 'vue'
 const rawQuestionList = [
   {
     _id: 'q1',

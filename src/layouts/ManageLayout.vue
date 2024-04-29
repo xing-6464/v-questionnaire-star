@@ -2,43 +2,53 @@
   <div class="container">
     <div class="left">
       <el-space direction="vertical">
-        <el-button type="primary" size="large" :icon="h(PlusOutlined)">创建问卷</el-button>
+        <el-button type="primary" size="large" :icon="Plus">创建问卷</el-button>
         <el-divider></el-divider>
         <el-button
           :type="route.path.startsWith('/manage/list') ? 'default' : 'text'"
           size="large"
-          :icon="h(BarsOutlined)"
-          @click="() => router.push('/manage/list')"
-          >我的问卷</el-button
+          :icon="List"
+          @click="routerPath('/manage/list')"
         >
+          我的问卷
+        </el-button>
         <el-button
           :type="route.path.startsWith('/manage/star') ? 'default' : 'text'"
-          :icon="h(StarOutlined)"
-          @click="() => router.push('/manage/star')"
-          >星标问卷</el-button
+          :icon="Star"
+          @click="routerPath('/manage/star')"
         >
+          星标问卷
+        </el-button>
         <el-button
           :type="route.path.startsWith('/manage/trash') ? 'default' : 'text'"
           size="large"
-          :icon="h(DeleteOutlined)"
-          @click="() => router.push('/manage/trash')"
-          >回收问卷</el-button
+          :icon="Delete"
+          @click="routerPath('/manage/trash')"
         >
+          回收问卷
+        </el-button>
       </el-space>
     </div>
     <div class="right">
-      <router-view />
+      <router-view v-slot="{ Component }">
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { h } from 'vue'
-import { useRoute, useRouter, RouterView } from 'vue-router'
-import { PlusOutlined, BarsOutlined, StarOutlined, DeleteOutlined } from '@ant-design/icons-vue'
+import { useRoute, useRouter } from 'vue-router'
+import { Star, Plus, List, Delete } from '@element-plus/icons-vue'
 
 const router = useRouter()
 const route = useRoute()
+
+function routerPath(url: string) {
+  router.push(url)
+}
 </script>
 
 <style scoped lang="scss">

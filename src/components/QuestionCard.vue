@@ -2,32 +2,23 @@
   <div class="container">
     <div class="title">
       <div class="left">
-        <a href="#">{{ props.data.title }}</a>
+        <a href="#">{{ title }}</a>
       </div>
       <div class="right">
-        <span v-if="props.data.isPublished" :style="{ color: 'green' }">已发布</span>
+        <span v-if="isPublished" :style="{ color: 'green' }">已发布</span>
         <span v-else>未发布</span>
         &nbsp;
-        <span>答卷：{{ props.data.answerCount }}</span>
+        <span>答卷：{{ answerCount }}</span>
         &nbsp;
-        <span>{{ props.data.createdAt }}</span>
+        <span>{{ createdAt }}</span>
       </div>
     </div>
     <div class="button-container">
       <div class="left">
-        <el-button
-          :icon="h(EditOutlined)"
-          size="small"
-          @click="() => router.push(`/question/edit/${props.data._id}`)"
-        >
+        <el-button :icon="Edit" size="small" @click="() => router.push(`/question/edit/${_id}`)">
           编辑问卷
         </el-button>
-        <el-button
-          :icon="h(LineChartOutlined)"
-          size="small"
-          text
-          @click="() => router.push(`/question/stat/${props.data._id}`)"
-        >
+        <el-button :icon="DataLine" size="small" text @click="routerPush(_id)">
           数据统计
         </el-button>
       </div>
@@ -41,22 +32,25 @@
 </template>
 
 <script setup lang="ts">
-import { h } from 'vue'
+import { nextTick } from 'vue'
 import { useRouter } from 'vue-router'
-import { EditOutlined, LineChartOutlined } from '@ant-design/icons-vue'
+import { Edit, DataLine } from '@element-plus/icons-vue'
 
 type PropsType = {
-  data: {
-    _id: string
-    title: string
-    isStar: boolean
-    isPublished: boolean
-    answerCount: number
-    createdAt: string
-  }
+  _id: string
+  title: string
+  isStar: boolean
+  isPublished: boolean
+  answerCount: number
+  createdAt: string
 }
 const props = defineProps<PropsType>()
 const router = useRouter()
+
+async function routerPush(_id: string) {
+  await nextTick()
+  router.push(`/question/stat/${_id}`)
+}
 </script>
 
 <style scoped lang="scss">
