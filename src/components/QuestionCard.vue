@@ -2,39 +2,58 @@
   <div class="container">
     <div class="title">
       <div class="left">
-        <a href="#">{{ title }}</a>
+        <router-link :to="isPublished ? `/question/stat/${_id}` : `/question/edit/${_id}`">
+          <el-space>
+            <el-icon v-if="isStar">
+              <Star />
+            </el-icon>
+            {{ title }}
+          </el-space>
+        </router-link>
       </div>
       <div class="right">
-        <span v-if="isPublished" :style="{ color: 'green' }">已发布</span>
-        <span v-else>未发布</span>
-        &nbsp;
-        <span>答卷：{{ answerCount }}</span>
-        &nbsp;
-        <span>{{ createdAt }}</span>
+        <el-space size="default">
+          <el-tag v-if="isPublished" type="primary">已发布</el-tag>
+          <el-tag v-else type="info" effect="plain">未发布</el-tag>
+          <span>答卷：{{ answerCount }}</span>
+          <span>{{ createdAt }}</span>
+        </el-space>
       </div>
     </div>
+    <el-divider :style="{ margin: '12px 0' }" />
     <div class="button-container">
       <div class="left">
-        <el-button :icon="Edit" size="small" @click="() => router.push(`/question/edit/${_id}`)">
+        <el-button
+          :icon="Edit"
+          text
+          size="small"
+          @click="() => router.push(`/question/edit/${_id}`)"
+        >
           编辑问卷
         </el-button>
-        <el-button :icon="DataLine" size="small" text @click="routerPush(_id)">
+        <el-button
+          :icon="DataLine"
+          size="small"
+          text
+          @click="() => router.push(`/question/stat/${_id}`)"
+        >
           数据统计
         </el-button>
       </div>
       <div class="right">
-        <el-button>标星</el-button>
-        <el-button>复杂</el-button>
-        <el-button>删除</el-button>
+        <el-button :icon="Star" text size="small">
+          {{ isStar ? '取消标星' : '标星' }}
+        </el-button>
+        <el-button :icon="CopyDocument" text size="small">复杂</el-button>
+        <el-button :icon="Delete" text size="small">删除</el-button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { nextTick } from 'vue'
 import { useRouter } from 'vue-router'
-import { Edit, DataLine } from '@element-plus/icons-vue'
+import { Edit, DataLine, Star, CopyDocument, Delete } from '@element-plus/icons-vue'
 
 type PropsType = {
   _id: string
@@ -46,11 +65,6 @@ type PropsType = {
 }
 const props = defineProps<PropsType>()
 const router = useRouter()
-
-async function routerPush(_id: string) {
-  await nextTick()
-  router.push(`/question/stat/${_id}`)
-}
 </script>
 
 <style scoped lang="scss">
