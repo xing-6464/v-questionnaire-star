@@ -4,7 +4,7 @@
       <div class="left">
         <router-link :to="isPublished ? `/question/stat/${_id}` : `/question/edit/${_id}`">
           <el-space>
-            <el-icon v-if="isStar">
+            <el-icon v-if="isStar" color="red">
               <Star />
             </el-icon>
             {{ title }}
@@ -44,8 +44,18 @@
         <el-button :icon="Star" text size="small">
           {{ isStar ? '取消标星' : '标星' }}
         </el-button>
-        <el-button :icon="CopyDocument" text size="small">复杂</el-button>
-        <el-button :icon="Delete" text size="small">删除</el-button>
+        <el-popconfirm
+          title="确定复制该问卷？"
+          confirm-button-text="确定"
+          cancel-button-text="取消"
+          width="160px"
+          @confirm="duplicate"
+        >
+          <template #reference>
+            <el-button :icon="CopyDocument" text size="small">复制</el-button>
+          </template>
+        </el-popconfirm>
+        <el-button :icon="Delete" text size="small" @click="del">删除</el-button>
       </div>
     </div>
   </div>
@@ -54,6 +64,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { Edit, DataLine, Star, CopyDocument, Delete } from '@element-plus/icons-vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 type PropsType = {
   _id: string
@@ -63,8 +74,24 @@ type PropsType = {
   answerCount: number
   createdAt: string
 }
-const props = defineProps<PropsType>()
+defineProps<PropsType>()
 const router = useRouter()
+
+function duplicate() {
+  ElMessage.success('复制成功')
+}
+
+function del() {
+  ElMessageBox.confirm('确定删除问卷？', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  })
+    .then(() => {
+      ElMessage.success('删除成功')
+    })
+    .catch(() => {})
+}
 </script>
 
 <style scoped lang="scss">

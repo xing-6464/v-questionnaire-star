@@ -38,13 +38,13 @@ import { RouterView } from 'vue-router'
 }
 
 .main {
-  min-height: calc(100vh - 64px - 65px);
+  min-height: calc(100vh - 64px - 67px);
   padding: 0;
 }
 
 .footer {
   text-align: center;
-  height: 65px;
+  height: 67px;
   line-height: 65px;
   background-color: #f7f7f7;
   border-top: 1px solid #e8e8e8;
