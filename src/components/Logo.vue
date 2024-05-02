@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <router-link to="/">
-      <el-space>
-        <h1>
+      <a-space>
+        <a-typography-title>
           <FormOutlined />
-        </h1>
-        <h1>小星问卷</h1>
-      </el-space>
+        </a-typography-title>
+        <a-typography-title>小星问卷</a-typography-title>
+      </a-space>
     </router-link>
   </div>
 </template>
@@ -25,7 +25,6 @@ import { FormOutlined } from '@ant-design/icons-vue'
   h1 {
     font-size: 32px;
     color: #f7f7f7;
-    font-weight: 600;
   }
 }
 </style>

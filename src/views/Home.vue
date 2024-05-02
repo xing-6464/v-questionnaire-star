@@ -1,12 +1,14 @@
 <template>
   <div class="container">
     <div class="info">
-      <h1>问卷调查 | 在线投票</h1>
-      <p>已累计创建问卷 100 份，发布问卷 90 份，收到问卷 980 份</p>
+      <a-typography-title> 问卷调查 | 在线投票 </a-typography-title>
+      <a-typography-paragraph
+        >已累计创建问卷 100 份，发布问卷 90 份，收到问卷 980 份</a-typography-paragraph
+      >
       <div>
-        <el-button type="primary" @click="() => router.push(MANAGE_INDEX_PATHNAME)"
-          >开始使用</el-button
-        >
+        <a-button type="primary" @click="() => router.push(MANAGE_INDEX_PATHNAME)">
+          开始使用
+        </a-button>
       </div>
     </div>
   </div>
@@ -31,20 +33,9 @@ const router = useRouter()
   .info {
     text-align: center;
 
-    h1 {
-      font-size: 42px;
-      font-weight: 800;
-      // margin-bottom: 12px;
-    }
-
-    p {
-      margin: 24px 0;
-    }
-
     button {
       height: 60px;
       font-size: 24px;
-      border-radius: 3px;
     }
   }
 }

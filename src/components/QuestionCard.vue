@@ -3,68 +3,75 @@
     <div class="title">
       <div class="left">
         <router-link :to="isPublished ? `/question/stat/${_id}` : `/question/edit/${_id}`">
-          <el-space>
-            <el-icon v-if="isStar" color="red">
-              <Star />
-            </el-icon>
+          <a-space>
+            <StarOutlined v-if="isStar" style="color: red" />
             {{ title }}
-          </el-space>
+          </a-space>
         </router-link>
       </div>
       <div class="right">
-        <el-space size="default">
-          <el-tag v-if="isPublished" type="primary">已发布</el-tag>
-          <el-tag v-else type="info" effect="plain">未发布</el-tag>
+        <a-space>
+          <a-tag v-if="isPublished" color="processing">已发布</a-tag>
+          <a-tag v-else>未发布</a-tag>
           <span>答卷：{{ answerCount }}</span>
           <span>{{ createdAt }}</span>
-        </el-space>
+        </a-space>
       </div>
     </div>
-    <el-divider :style="{ margin: '12px 0' }" />
+    <a-divider :style="{ margin: '12px 0' }" />
     <div class="button-container">
       <div class="left">
-        <el-button
-          :icon="Edit"
-          text
-          size="small"
-          @click="() => router.push(`/question/edit/${_id}`)"
-        >
-          编辑问卷
-        </el-button>
-        <el-button
-          :icon="DataLine"
-          size="small"
-          text
-          @click="() => router.push(`/question/stat/${_id}`)"
-        >
-          数据统计
-        </el-button>
+        <a-space>
+          <a-button
+            :icon="h(EditOutlined)"
+            type="text"
+            size="small"
+            @click="() => router.push(`/question/edit/${_id}`)"
+          >
+            编辑问卷
+          </a-button>
+          <a-button
+            :icon="h(LineChartOutlined)"
+            size="small"
+            type="text"
+            @click="() => router.push(`/question/stat/${_id}`)"
+          >
+            数据统计
+          </a-button>
+        </a-space>
       </div>
       <div class="right">
-        <el-button :icon="Star" text size="small">
-          {{ isStar ? '取消标星' : '标星' }}
-        </el-button>
-        <el-popconfirm
-          title="确定复制该问卷？"
-          confirm-button-text="确定"
-          cancel-button-text="取消"
-          width="160px"
-          @confirm="duplicate"
-        >
-          <template #reference>
-            <el-button :icon="CopyDocument" text size="small">复制</el-button>
-          </template>
-        </el-popconfirm>
-        <el-button :icon="Delete" text size="small" @click="del">删除</el-button>
+        <a-space>
+          <a-button :icon="h(StarOutlined)" type="text" size="small">
+            {{ isStar ? '取消标星' : '标星' }}
+          </a-button>
+          <a-popconfirm
+            title="确定复制该问卷？"
+            ok-text="确定"
+            cancel-text="取消"
+            @confirm="duplicate"
+          >
+            <a-button :icon="h(CopyOutlined)" type="text" size="small">复制</a-button>
+          </a-popconfirm>
+          <a-button :icon="h(DeleteOutlined)" type="text" size="small" @click="del">删除</a-button>
+        </a-space>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { h } from 'vue'
 import { useRouter } from 'vue-router'
-import { Edit, DataLine, Star, CopyDocument, Delete } from '@element-plus/icons-vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { message, Modal } from 'ant-design-vue'
+import {
+  CopyOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  ExclamationCircleOutlined,
+  LineChartOutlined,
+  StarOutlined
+} from '@ant-design/icons-vue'
 
 type PropsType = {
   _id: string
@@ -78,19 +85,17 @@ defineProps<PropsType>()
 const router = useRouter()
 
 function duplicate() {
-  ElMessage.success('复制成功')
+  message.success('复制成功')
 }
 
 function del() {
-  ElMessageBox.confirm('确定删除问卷？', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
-    type: 'warning'
+  Modal.confirm({
+    title: '确定删除问卷',
+    okText: '确定',
+    cancelText: '取消',
+    icon: h(ExclamationCircleOutlined),
+    onOk: () => message.success('删除成功')
   })
-    .then(() => {
-      ElMessage.success('删除成功')
-    })
-    .catch(() => {})
 }
 </script>
 
@@ -135,15 +140,10 @@ function del() {
     button {
       color: #999;
     }
+
+    button:hover {
+      color: #000;
+    }
   }
-}
-
-a:link,
-a:visited {
-  color: #1677ff;
-}
-
-.el-button.is-text:not(.is-disabled):hover {
-  color: #000;
 }
 </style>

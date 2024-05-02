@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="left">
-      <h1>我的问卷</h1>
+      <a-typography-title :level="3">我的问卷</a-typography-title>
     </div>
     <div class="right">搜索</div>
   </div>
