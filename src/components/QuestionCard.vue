@@ -111,6 +111,7 @@ function del() {
 
   .left {
     flex: 1;
+    font-size: 14px;
   }
 
   .right {
@@ -135,5 +136,14 @@ function del() {
       color: #999;
     }
   }
+}
+
+a:link,
+a:visited {
+  color: #1677ff;
+}
+
+.el-button.is-text:not(.is-disabled):hover {
+  color: #000;
 }
 </style>

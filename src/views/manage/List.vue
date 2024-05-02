@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="left">
-      <h3>我的问卷</h3>
+      <h1>我的问卷</h1>
     </div>
     <div class="right">搜索</div>
   </div>
@@ -58,5 +58,5 @@ useTitle('小星问卷 - 我的问卷')
 </script>
 
 <style scoped lang="scss">
-@import url(./common.scss);
+@import url('./common.scss');
 </style>
