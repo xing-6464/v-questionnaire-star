@@ -1,7 +1,7 @@
 <template>
   <a-input-search
     placeholder="输入关键字搜索"
-    v-model:value="value"
+    v-model:value="searchVal"
     size="large"
     @Search="handleSearch"
     allow-clear
@@ -10,11 +10,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { LIST_SEARCH_PARAM_KEY } from '@/constant'
 
-const value = ref('')
+const router = useRouter()
+const route = useRoute()
+
+const searchVal = ref('')
+
+watch(
+  () => route.query,
+  (newVal) => {
+    const keyword = newVal[LIST_SEARCH_PARAM_KEY] || ''
+    searchVal.value = keyword as string
+  },
+  { immediate: true }
+)
+
 function handleSearch(searchVal: string) {
-  console.log(searchVal)
+  router.push({ path: route.path, query: { [LIST_SEARCH_PARAM_KEY]: searchVal } })
 }
 </script>
 

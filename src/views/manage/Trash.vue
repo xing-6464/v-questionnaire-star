@@ -3,7 +3,9 @@
     <div class="left">
       <a-typography-title :level="3">回收站</a-typography-title>
     </div>
-    <div class="right">（搜索）</div>
+    <div class="right">
+      <ListSearch />
+    </div>
   </div>
   <div class="content">
     <a-empty v-if="questionList.length === 0" />
@@ -43,6 +45,7 @@ import { ref, h } from 'vue'
 import { useTitle } from '@vueuse/core'
 import { Modal, message } from 'ant-design-vue'
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
+import ListSearch from '@/components/ListSearch.vue'
 
 const rawQuestionList = [
   {

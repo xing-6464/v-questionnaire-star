@@ -3,10 +3,12 @@
     <div class="left">
       <a-typography-title :level="3">星标问卷</a-typography-title>
     </div>
-    <div class="right">（搜索）</div>
+    <div class="right">
+      <ListSearch />
+    </div>
   </div>
   <div class="content">
-    <el-empty v-if="questionList.length === 0" description="暂无数据" />
+    <a-empty v-if="questionList.length === 0" description="暂无数据" />
     <template v-else v-for="q in questionList" :key="q._id">
       <QuestionCard
         :_id="q._id"
@@ -24,6 +26,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import QuestionCard from '@/components/QuestionCard.vue'
+import ListSearch from '@/components/ListSearch.vue'
+
 const rawQuestionList = [
   {
     _id: 'q1',
