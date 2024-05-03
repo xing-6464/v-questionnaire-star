@@ -8,7 +8,24 @@
   <div class="content">
     <a-empty v-if="questionList.length === 0" />
     <template v-else>
-      <a-table :data-source="questionList" :columns="tableColumns" style="width: 100%">
+      <div style="margin-bottom: 16px">
+        <a-space>
+          <a-button type="primary" :disabled="selectedIds.length === 0">恢复</a-button>
+          <a-button danger :disabled="selectedIds.length === 0" @click="del">彻底删除</a-button>
+        </a-space>
+      </div>
+      <a-table
+        :data-source="questionList"
+        :columns="tableColumns"
+        style="width: 100%"
+        :row-key="(q) => q._id"
+        :row-selection="{
+          type: 'checkbox',
+          onChange: (selectedRowKeys) => {
+            selectedIds = selectedRowKeys as string[]
+          }
+        }"
+      >
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'isPublished'">
             <a-tag v-if="record.isPublished" color="processing">已发布</a-tag>
@@ -22,8 +39,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, h } from 'vue'
 import { useTitle } from '@vueuse/core'
+import { Modal, message } from 'ant-design-vue'
+import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
 
 const rawQuestionList = [
   {
@@ -76,8 +95,22 @@ const tableColumns = [
 
 useTitle('小星问卷 - 回收站')
 const questionList = ref(rawQuestionList)
+const selectedIds = ref<string[]>([])
+
+function del() {
+  Modal.confirm({
+    title: '确认彻底删除问卷？',
+    content: '删除后将无法恢复，请谨慎操作！',
+    okText: '确认',
+    cancelText: '取消',
+    icon: h(ExclamationCircleOutlined),
+    onOk: () => {
+      message.success(`删除${JSON.stringify(selectedIds)}`)
+    }
+  })
+}
 </script>
 
 <style scoped lang="scss">
-@import url('./manage/common.scss');
+@import url('./common.scss');
 </style>

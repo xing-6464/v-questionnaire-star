@@ -8,9 +8,9 @@
         <UserInfo />
       </div>
     </a-layout-header>
-    <a-layout-main class="main">
+    <a-layout-content class="main">
       <router-view></router-view>
-    </a-layout-main>
+    </a-layout-content>
     <a-layout-footer class="footer">小星问卷 &copy; 2024 - present. Created by 星</a-layout-footer>
   </a-layout>
 </template>
