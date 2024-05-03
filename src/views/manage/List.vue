@@ -3,7 +3,9 @@
     <div class="left">
       <a-typography-title :level="3">我的问卷</a-typography-title>
     </div>
-    <div class="right">搜索</div>
+    <div class="right">
+      <ListSearch />
+    </div>
   </div>
   <div class="content">
     <template v-if="questionList.length > 0">
@@ -24,6 +26,7 @@
 
 <script setup lang="ts">
 import QuestionCard from '@/components/QuestionCard.vue'
+import ListSearch from '@/components/ListSearch.vue'
 import { useTitle } from '@vueuse/core'
 import { ref } from 'vue'
 const rawQuestionList = [
