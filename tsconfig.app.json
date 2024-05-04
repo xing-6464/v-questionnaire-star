@@ -10,7 +10,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["element-plus/global"]
+    "types": ["ant-design-vue/typings/global.d.ts"]
   },
-  "files": ["./components.d.ts"]
+  // "files": ["./components.d.ts"]
 }

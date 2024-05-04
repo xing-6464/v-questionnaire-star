@@ -6,12 +6,58 @@
         <ATypographyTitle :level="2">注册新用户</ATypographyTitle>
       </ASpace>
     </div>
-    div>
+    <div>
+      <AForm
+        :model="formState"
+        :label-col="{ span: 6 }"
+        :wrapper-col="{ span: 16 }"
+        @finish="onFinish"
+      >
+        <AFormItem label="用户名" name="username">
+          <AInput v-model:value="formState.username" />
+        </AFormItem>
+        <AFormItem label="密码" name="password">
+          <AInputPassword v-model:value="formState.password" />
+        </AFormItem>
+        <AFormItem label="确认密码" name="confirmPassword">
+          <AInputPassword v-model:value="formState.confirmPassword" />
+        </AFormItem>
+        <AFormItem label="昵称" name="nickname">
+          <AInput v-model:value="formState.nickname" />
+        </AFormItem>
+        <AFormItem :wrapper-col="{ offset: 6, span: 16 }">
+          <ASpace>
+            <AButton type="primary" html-type="submit"> 注册 </AButton>
+            <RouterLink :to="LOGIN_PATHNAME">已有账户，请登录</RouterLink>
+          </ASpace>
+        </AFormItem>
+      </AForm>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { reactive } from 'vue'
 import { UserAddOutlined } from '@ant-design/icons-vue'
+import { LOGIN_PATHNAME } from '@/router'
+
+interface FormState {
+  username: string
+  password: string
+  confirmPassword: string
+  nickname: string
+}
+
+const formState = reactive<FormState>({
+  username: '',
+  password: '',
+  confirmPassword: '',
+  nickname: ''
+})
+
+function onFinish(values: FormState) {
+  console.log(values)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -21,5 +67,6 @@ import { UserAddOutlined } from '@ant-design/icons-vue'
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 64px - 65px);
+  background-color: #fff;
 }
 </style>
