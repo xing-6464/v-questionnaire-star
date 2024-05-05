@@ -9,6 +9,7 @@
     <div>
       <AForm
         :model="formState"
+        :rules="rules"
         :label-col="{ span: 6 }"
         :wrapper-col="{ span: 16 }"
         @finish="onFinish"
@@ -38,6 +39,7 @@ import { RouterLink } from 'vue-router'
 import { UserAddOutlined } from '@ant-design/icons-vue'
 import { onMounted, reactive } from 'vue'
 import { REGISTER_PATHNAME } from '@/router'
+import type { Rule } from 'ant-design-vue/es/form'
 
 const USERNAME_KEY = 'USERNAME'
 const PASSWORD_KEY = 'PASSWORD'
@@ -53,6 +55,15 @@ const formState = reactive<FormState>({
   password: '',
   remember: true
 })
+
+const rules: Record<string, Rule[]> = {
+  username: [
+    { required: true, message: '请输入用户名' },
+    { type: 'string', min: 5, max: 20, message: '长度在5-20个字符之间' },
+    { pattern: /^\w+$/, message: '只能字母、数字和下划线' }
+  ],
+  password: [{ required: true, message: '请输入密码' }]
+}
 
 onMounted(() => {
   const { username, password } = getUserFromStorage()

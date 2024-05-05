@@ -9,6 +9,7 @@
     <div>
       <AForm
         :model="formState"
+        :rules="rules"
         :label-col="{ span: 6 }"
         :wrapper-col="{ span: 16 }"
         @finish="onFinish"
@@ -40,6 +41,7 @@
 import { reactive } from 'vue'
 import { UserAddOutlined } from '@ant-design/icons-vue'
 import { LOGIN_PATHNAME } from '@/router'
+import type { Rule } from 'ant-design-vue/es/form'
 
 interface FormState {
   username: string
@@ -54,6 +56,24 @@ const formState = reactive<FormState>({
   confirmPassword: '',
   nickname: ''
 })
+
+const rules: Record<string, Rule[]> = {
+  username: [{ required: true, message: '请输入用户名' }],
+  password: [{ required: true, message: '请输入密码' }],
+  nickname: [{ required: true, message: '请输入昵称' }],
+  confirmPassword: [
+    { required: true, message: '请确认密码' },
+    {
+      validator: async (rule, value) => {
+        if (!value || formState.password === value) {
+          return Promise.resolve()
+        } else {
+          return Promise.reject(new Error('两次密码输入不一致'))
+        }
+      }
+    }
+  ]
+}
 
 function onFinish(values: FormState) {
   console.log(values)
