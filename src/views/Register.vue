@@ -28,7 +28,7 @@
         <AFormItem :wrapper-col="{ offset: 6, span: 16 }">
           <ASpace>
             <AButton type="primary" html-type="submit"> 注册 </AButton>
-            <RouterLink :to="LOGIN_PATHNAME">已有账户，请登录</RouterLink>
+            <RouterLink :to="LOGIN_PATHNAME">有账户，请登录</RouterLink>
           </ASpace>
         </AFormItem>
       </AForm>
