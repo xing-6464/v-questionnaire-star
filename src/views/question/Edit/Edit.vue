@@ -1,18 +1,15 @@
 <template>
-  <div>id : {{ route.params.id }}</div>
+  <div>
+    <p>Edit page</p>
+    <p v-if="loading">loading...</p>
+    <div v-else>{{ JSON.stringify(questionData) }}</div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { getQuestionService } from '@/services/question'
-import { onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import useQuestionData from '@/hooks/useQuestionData'
 
-const route = useRoute()
-
-onMounted(async () => {
-  const data = await getQuestionService(route.params.id as string)
-  console.log(data)
-})
+const { loading, questionData } = useQuestionData()
 </script>
 
 <style scoped lang="scss"></style>
