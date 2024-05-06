@@ -2,14 +2,14 @@
   <div>
     <p>Edit page</p>
     <p v-if="loading">loading...</p>
-    <div v-else>{{ JSON.stringify(questionData) }}</div>
+    <div v-else>{{ JSON.stringify(data) }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
 import useQuestionData from '@/hooks/useQuestionData'
 
-const { loading, questionData } = useQuestionData()
+const { data, loading, error } = useQuestionData()
 </script>
 
 <style scoped lang="scss"></style>
