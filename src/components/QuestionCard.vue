@@ -57,7 +57,9 @@
             cancel-text="取消"
             @confirm="duplicate"
           >
-            <a-button :icon="h(CopyOutlined)" type="text" size="small">复制</a-button>
+            <a-button :icon="h(CopyOutlined)" type="text" size="small" :loading="duplicateLoading"
+              >复制</a-button
+            >
           </a-popconfirm>
           <a-button :icon="h(DeleteOutlined)" type="text" size="small" @click="del">删除</a-button>
         </a-space>
@@ -79,7 +81,7 @@ import {
   StarOutlined
 } from '@ant-design/icons-vue'
 import { useRequest } from 'vue-request'
-import { updateQuestionService } from '@/services/question'
+import { duplicateQuestionService, updateQuestionService } from '@/services/question'
 
 type PropsType = {
   _id: string
@@ -94,6 +96,7 @@ const props = defineProps<PropsType>()
 const router = useRouter()
 const isStarState = ref(props.isStar)
 
+// 标星
 const { loading: changeStarLoading, run: changeStar } = useRequest(
   async () => {
     await updateQuestionService(props._id, { isStar: !isStarState.value })
@@ -107,9 +110,17 @@ const { loading: changeStarLoading, run: changeStar } = useRequest(
   }
 )
 
-function duplicate() {
-  message.success('复制成功')
-}
+// 复制
+const { loading: duplicateLoading, run: duplicate } = useRequest(
+  async () => await duplicateQuestionService(props._id),
+  {
+    manual: true,
+    onSuccess(res) {
+      router.push(`/question/edit/${res.id}`)
+      message.success('复制成功')
+    }
+  }
+)
 
 function del() {
   Modal.confirm({
