@@ -42,7 +42,7 @@
 <script setup lang="ts">
 import QuestionCard from '@/components/QuestionCard.vue'
 import ListSearch from '@/components/ListSearch.vue'
-import { computed, onDeactivated, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useDebounceFn } from '@vueuse/core'
 import { useRequest } from 'vue-request'
