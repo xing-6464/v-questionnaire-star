@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <router-link to="/">
+    <router-link :to="pathname">
       <a-space>
         <a-typography-title>
           <FormOutlined />
@@ -13,6 +13,22 @@
 
 <script setup lang="ts">
 import { FormOutlined } from '@ant-design/icons-vue'
+import useGetUserInfo from '@/hooks/useGetUserInfo'
+import { ref, watch } from 'vue'
+import { HOME_PATHNAME, MANAGE_INDEX_PATHNAME } from '@/router'
+
+const { userInfo } = useGetUserInfo()
+const pathname = ref(HOME_PATHNAME)
+
+watch(
+  pathname,
+  () => {
+    if (userInfo.value.username) {
+      pathname.value = MANAGE_INDEX_PATHNAME
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <style scoped lang="scss">
