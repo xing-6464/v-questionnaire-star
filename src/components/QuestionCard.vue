@@ -42,8 +42,14 @@
       </div>
       <div class="right">
         <a-space>
-          <a-button :icon="h(StarOutlined)" type="text" size="small">
-            {{ isStar ? '取消标星' : '标星' }}
+          <a-button
+            :icon="h(StarOutlined)"
+            type="text"
+            size="small"
+            :loading="changeStarLoading"
+            @click="changeStar"
+          >
+            {{ isStarState ? '取消标星' : '标星' }}
           </a-button>
           <a-popconfirm
             title="确定复制该问卷？"
@@ -61,7 +67,7 @@
 </template>
 
 <script setup lang="ts">
-import { h } from 'vue'
+import { h, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { message, Modal } from 'ant-design-vue'
 import {
@@ -72,6 +78,8 @@ import {
   LineChartOutlined,
   StarOutlined
 } from '@ant-design/icons-vue'
+import { useRequest } from 'vue-request'
+import { updateQuestionService } from '@/services/question'
 
 type PropsType = {
   _id: string
@@ -81,8 +89,23 @@ type PropsType = {
   answerCount: number
   createdAt: string
 }
-defineProps<PropsType>()
+const props = defineProps<PropsType>()
+
 const router = useRouter()
+const isStarState = ref(props.isStar)
+
+const { loading: changeStarLoading, run: changeStar } = useRequest(
+  async () => {
+    await updateQuestionService(props._id, { isStar: !isStarState.value })
+  },
+  {
+    manual: true,
+    onSuccess() {
+      isStarState.value = !isStarState.value
+      message.success('已更新')
+    }
+  }
+)
 
 function duplicate() {
   message.success('复制成功')
