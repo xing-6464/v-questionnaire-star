@@ -12,33 +12,41 @@
       <a-spin />
     </div>
     <template v-if="!loading && data">
-      <a-empty v-if="data.list.length === 0" />
-      <template v-else> </template>
-      <div style="margin-bottom: 16px">
-        <a-space>
-          <a-button type="primary" :disabled="selectedIds.length === 0">恢复</a-button>
-          <a-button danger :disabled="selectedIds.length === 0" @click="del">彻底删除</a-button>
-        </a-space>
-      </div>
-      <a-table
-        :data-source="data.list"
-        :columns="tableColumns"
-        style="width: 100%"
-        :row-key="(q) => q._id"
-        :row-selection="{
-          type: 'checkbox',
-          onChange: (selectedRowKeys) => {
-            selectedIds = selectedRowKeys as string[]
-          }
-        }"
-      >
-        <template #bodyCell="{ column, record }">
-          <template v-if="column.key === 'isPublished'">
-            <a-tag v-if="record.isPublished" color="processing">已发布</a-tag>
-            <a-tag v-else>未发布</a-tag>
+      <a-empty v-if="data.list.length === 0" description="暂无数据" />
+      <template v-else>
+        <div style="margin-bottom: 16px">
+          <a-space>
+            <a-button
+              type="primary"
+              :disabled="selectedIds.length === 0"
+              :loading="recoverLoading"
+              @click="recover"
+            >
+              恢复
+            </a-button>
+            <a-button danger :disabled="selectedIds.length === 0" @click="del">彻底删除</a-button>
+          </a-space>
+        </div>
+        <a-table
+          :data-source="data.list"
+          :columns="tableColumns"
+          style="width: 100%"
+          :row-key="(q) => q._id"
+          :row-selection="{
+            type: 'checkbox',
+            onChange: (selectedRowKeys) => {
+              selectedIds = selectedRowKeys as string[]
+            }
+          }"
+        >
+          <template #bodyCell="{ column, record }">
+            <template v-if="column.key === 'isPublished'">
+              <a-tag v-if="record.isPublished" color="processing">已发布</a-tag>
+              <a-tag v-else>未发布</a-tag>
+            </template>
           </template>
-        </template>
-      </a-table>
+        </a-table>
+      </template>
     </template>
   </div>
   <div class="footer">
@@ -53,6 +61,8 @@ import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
 import ListSearch from '@/components/ListSearch.vue'
 import useLoadQuestionListData from '@/hooks/useLoadQuestionListData'
 import ListPage from '@/components/ListPage.vue'
+import { useRequest } from 'vue-request'
+import { updateQuestionService } from '@/services/question'
 
 const tableColumns = [
   {
@@ -77,9 +87,24 @@ const tableColumns = [
   }
 ]
 
-const { data, loading } = useLoadQuestionListData({ isDeleted: true })
-
 const selectedIds = ref<string[]>([])
+
+const { data, loading, refresh } = useLoadQuestionListData({ isDeleted: true })
+
+const { run: recover, loading: recoverLoading } = useRequest(
+  async () => {
+    for await (const id of selectedIds.value) {
+      await updateQuestionService(id, { isDeleted: false })
+    }
+  },
+  {
+    manual: true,
+    onSuccess() {
+      message.success('恢复成功')
+      refresh()
+    }
+  }
+)
 
 function del() {
   Modal.confirm({
