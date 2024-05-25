@@ -31,14 +31,49 @@
 import QuestionCard from '@/components/QuestionCard.vue'
 import ListSearch from '@/components/ListSearch.vue'
 import useLoadQuestionListData from '@/hooks/useLoadQuestionListData'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { useDebounceFn } from '@vueuse/core'
 
+const route = useRoute()
 const list = ref<any[]>([]) // 列表数据
 const page = ref(1) // 请求页码
 const total = ref(0)
 const haveMoreData = computed(() => total.value > list.value.length)
 
 const { data, loading } = useLoadQuestionListData()
+
+const tryLoadMore = useDebounceFn(() => {
+  console.log('tryLoadMore...')
+}, 500)
+
+// 监听路由变化，开始加载数据
+watch(
+  () => route.query,
+  () => {
+    tryLoadMore()
+  },
+  {
+    immediate: true
+  }
+)
+
+// 监听列表数据变化，更新页码
+watch(
+  () => route.query,
+  () => {
+    // if (haveMoreData.value) {
+    window.addEventListener('scroll', tryLoadMore)
+    // }
+
+    return () => {
+      window.removeEventListener('scroll', tryLoadMore)
+    }
+  },
+  {
+    immediate: true
+  }
+)
 </script>
 
 <style scoped lang="scss">
