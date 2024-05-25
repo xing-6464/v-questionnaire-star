@@ -24,7 +24,14 @@
             >
               恢复
             </a-button>
-            <a-button danger :disabled="selectedIds.length === 0" @click="del">彻底删除</a-button>
+            <a-button
+              danger
+              :disabled="selectedIds.length === 0"
+              :loading="deleteLoading"
+              @click="del"
+            >
+              彻底删除
+            </a-button>
           </a-space>
         </div>
         <a-table
@@ -62,7 +69,7 @@ import ListSearch from '@/components/ListSearch.vue'
 import useLoadQuestionListData from '@/hooks/useLoadQuestionListData'
 import ListPage from '@/components/ListPage.vue'
 import { useRequest } from 'vue-request'
-import { updateQuestionService } from '@/services/question'
+import { deleteQuestionService, updateQuestionService } from '@/services/question'
 
 const tableColumns = [
   {
@@ -91,6 +98,7 @@ const selectedIds = ref<string[]>([])
 
 const { data, loading, refresh } = useLoadQuestionListData({ isDeleted: true })
 
+// 恢复
 const { run: recover, loading: recoverLoading } = useRequest(
   async () => {
     for await (const id of selectedIds.value) {
@@ -102,6 +110,20 @@ const { run: recover, loading: recoverLoading } = useRequest(
     onSuccess() {
       message.success('恢复成功')
       refresh()
+      selectedIds.value = []
+    }
+  }
+)
+
+// 彻底删除
+const { run: deleteQuestion, loading: deleteLoading } = useRequest(
+  async () => await deleteQuestionService(selectedIds.value),
+  {
+    manual: true,
+    onSuccess() {
+      message.success('删除成功')
+      refresh()
+      selectedIds.value = []
     }
   }
 )
@@ -113,9 +135,7 @@ function del() {
     okText: '确认',
     cancelText: '取消',
     icon: h(ExclamationCircleOutlined),
-    onOk: () => {
-      message.success(`删除${JSON.stringify(selectedIds)}`)
-    }
+    onOk: deleteQuestion
   })
 }
 </script>
