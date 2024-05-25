@@ -40,9 +40,7 @@
     </div>
     <div class="right">
       <router-view v-slot="{ Component }">
-        <keep-alive>
-          <component :is="Component" />
-        </keep-alive>
+        <component :is="Component" />
       </router-view>
     </div>
   </div>
