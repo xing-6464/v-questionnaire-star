@@ -31,10 +31,9 @@
 import QuestionCard from '@/components/QuestionCard.vue'
 import ListSearch from '@/components/ListSearch.vue'
 import { useTitle } from '@vueuse/core'
-import { getQuestionListService } from '@/services/question'
-import { useRequest } from 'vue-request'
+import useLoadQuestionListData from '@/hooks/useLoadQuestionListData'
 
-const { data, loading } = useRequest(getQuestionListService)
+const { data, loading } = useLoadQuestionListData()
 
 useTitle('小星问卷 - 我的问卷')
 </script>
