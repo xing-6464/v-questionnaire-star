@@ -42,6 +42,10 @@ import { reactive } from 'vue'
 import { UserAddOutlined } from '@ant-design/icons-vue'
 import { LOGIN_PATHNAME } from '@/router'
 import type { Rule } from 'ant-design-vue/es/form'
+import { useRequest } from 'vue-request'
+import { registerService } from '@/services/user'
+import { message } from 'ant-design-vue'
+import { useRouter } from 'vue-router'
 
 interface FormState {
   username: string
@@ -74,9 +78,24 @@ const rules: Record<string, Rule[]> = {
     }
   ]
 }
+const router = useRouter()
 
+const { run } = useRequest(
+  async (values) => {
+    const { username, password, nickname } = values
+    await registerService(username, password, nickname)
+  },
+  {
+    manual: true,
+    onSuccess() {
+      message.success('注册成功，请登录')
+      router.push(LOGIN_PATHNAME)
+    }
+  }
+)
 function onFinish(values: FormState) {
-  console.log(values)
+  // 调用ajax
+  run(values)
 }
 </script>
 

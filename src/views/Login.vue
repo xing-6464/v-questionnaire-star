@@ -35,11 +35,14 @@
 </template>
 
 <script lang="ts" setup>
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import { UserAddOutlined } from '@ant-design/icons-vue'
 import { onMounted, reactive } from 'vue'
-import { REGISTER_PATHNAME } from '@/router'
+import { MANAGE_INDEX_PATHNAME, REGISTER_PATHNAME } from '@/router'
 import type { Rule } from 'ant-design-vue/es/form'
+import { useRequest } from 'vue-request'
+import { loginService } from '@/services/user'
+import { message } from 'ant-design-vue'
 
 const USERNAME_KEY = 'USERNAME'
 const PASSWORD_KEY = 'PASSWORD'
@@ -49,13 +52,6 @@ interface FormState {
   password: string
   remember: boolean
 }
-
-const formState = reactive<FormState>({
-  username: '',
-  password: '',
-  remember: true
-})
-
 const rules: Record<string, Rule[]> = {
   username: [
     { required: true, message: '请输入用户名' },
@@ -65,6 +61,28 @@ const rules: Record<string, Rule[]> = {
   password: [{ required: true, message: '请输入密码' }]
 }
 
+const formState = reactive<FormState>({
+  username: '',
+  password: '',
+  remember: true
+})
+
+const router = useRouter()
+
+const { run } = useRequest(
+  async (username: string, password: string) => {
+    const data = await loginService(username, password)
+    return data
+  },
+  {
+    manual: true,
+    onSuccess(res) {
+      message.success('登录成功')
+      router.push(MANAGE_INDEX_PATHNAME)
+    }
+  }
+)
+
 onMounted(() => {
   const { username, password } = getUserFromStorage()
   formState.username = username
@@ -72,8 +90,12 @@ onMounted(() => {
 })
 
 function onFinish(values: FormState) {
-  if (values.remember) {
-    rememberUser(values.username, values.password)
+  const { username, password, remember } = values
+
+  run(username, password)
+
+  if (remember) {
+    rememberUser(username, password)
   } else {
     deleteUserFromStorage()
   }
