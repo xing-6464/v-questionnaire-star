@@ -13,9 +13,11 @@
 
 <script lang="ts" setup>
 import useLoadUserData from '@/hooks/useLoadUserData'
+import useRouterPage from '@/hooks/useRouterPage'
 import { RouterView } from 'vue-router'
 
 const { waitingUserData } = useLoadUserData()
+useRouterPage(waitingUserData)
 </script>
 
 <style scoped lang="scss"></style>

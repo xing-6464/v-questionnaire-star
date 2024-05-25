@@ -24,8 +24,10 @@
 import Logo from '@/components/Logo.vue'
 import UserInfo from '@/components/UserInfo.vue'
 import useLoadUserData from '@/hooks/useLoadUserData'
+import useRouterPage from '@/hooks/useRouterPage'
 
 const { waitingUserData } = useLoadUserData()
+useRouterPage(waitingUserData)
 </script>
 
 <style scoped lang="scss">
