@@ -1,10 +1,11 @@
 <template>
-  <div class="container">
+  <template v-if="isDeletedState"></template>
+  <div v-else class="container">
     <div class="title">
       <div class="left">
         <router-link :to="isPublished ? `/question/stat/${_id}` : `/question/edit/${_id}`">
           <a-space>
-            <StarOutlined v-if="isStar" style="color: red" />
+            <StarOutlined v-if="isStarState" style="color: red" />
             {{ title }}
           </a-space>
         </router-link>
@@ -57,11 +58,19 @@
             cancel-text="取消"
             @confirm="duplicate"
           >
-            <a-button :icon="h(CopyOutlined)" type="text" size="small" :loading="duplicateLoading"
-              >复制</a-button
-            >
+            <a-button :icon="h(CopyOutlined)" type="text" size="small" :loading="duplicateLoading">
+              复制
+            </a-button>
           </a-popconfirm>
-          <a-button :icon="h(DeleteOutlined)" type="text" size="small" @click="del">删除</a-button>
+          <a-button
+            :icon="h(DeleteOutlined)"
+            type="text"
+            size="small"
+            :loading="delLoading"
+            @click="del"
+          >
+            删除
+          </a-button>
         </a-space>
       </div>
     </div>
@@ -95,6 +104,7 @@ const props = defineProps<PropsType>()
 
 const router = useRouter()
 const isStarState = ref(props.isStar)
+const isDeletedState = ref(false)
 
 // 标星
 const { loading: changeStarLoading, run: changeStar } = useRequest(
@@ -122,13 +132,25 @@ const { loading: duplicateLoading, run: duplicate } = useRequest(
   }
 )
 
+// 删除
+const { loading: delLoading, run: deleteQuestion } = useRequest(
+  async () => await updateQuestionService(props._id, { isDeleted: true }),
+  {
+    manual: true,
+    onSuccess() {
+      message.success('删除成功')
+      isDeletedState.value = true
+    }
+  }
+)
+
 function del() {
   Modal.confirm({
     title: '确定删除问卷',
     okText: '确定',
     cancelText: '取消',
     icon: h(ExclamationCircleOutlined),
-    onOk: () => message.success('删除成功')
+    onOk: deleteQuestion
   })
 }
 </script>
