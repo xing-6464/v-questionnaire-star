@@ -13,11 +13,12 @@
 
 <script setup lang="ts">
 import { FormOutlined } from '@ant-design/icons-vue'
-import useGetUserInfo from '@/hooks/useGetUserInfo'
 import { ref, watch } from 'vue'
 import { HOME_PATHNAME, MANAGE_INDEX_PATHNAME } from '@/router'
+import { useUserInfo } from '@/stores/user'
+import { storeToRefs } from 'pinia'
 
-const { userInfo } = useGetUserInfo()
+const { userInfo } = storeToRefs(useUserInfo())
 const pathname = ref(HOME_PATHNAME)
 
 watch(

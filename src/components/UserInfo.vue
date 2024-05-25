@@ -12,19 +12,20 @@
 </template>
 
 <script setup lang="ts">
-import useGetUserInfo from '@/hooks/useGetUserInfo'
 import { LOGIN_PATHNAME } from '@/router'
-// import { getUserInfoService } from '@/services/user'
+import { useUserInfo } from '@/stores/user'
 import { removeToken } from '@/utils/user-token'
 import { UserOutlined } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue'
-// import { useRequest } from 'vue-request'
 import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 
 const router = useRouter()
 
 // const { data } = useRequest(getUserInfoService)
-const { userInfo, logout: logoutInfo } = useGetUserInfo()
+const store = useUserInfo()
+const { userInfo } = storeToRefs(store)
+const { logout: logoutInfo } = store
 
 function logout() {
   // 清除token

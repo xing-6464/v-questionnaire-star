@@ -9,7 +9,12 @@
       </div>
     </a-layout-header>
     <a-layout-content class="main">
-      <router-view></router-view>
+      <template v-if="!waitingUserData">
+        <router-view></router-view>
+      </template>
+      <div v-else style="text-align: center; margin-top: 60px">
+        <ASpin />
+      </div>
     </a-layout-content>
     <a-layout-footer class="footer">小星问卷 &copy; 2024 - present. Created by 星</a-layout-footer>
   </a-layout>
@@ -18,6 +23,9 @@
 <script setup lang="ts">
 import Logo from '@/components/Logo.vue'
 import UserInfo from '@/components/UserInfo.vue'
+import useLoadUserData from '@/hooks/useLoadUserData'
+
+const { waitingUserData } = useLoadUserData()
 </script>
 
 <style scoped lang="scss">

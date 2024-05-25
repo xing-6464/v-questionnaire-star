@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { reactive } from 'vue'
+import { ref } from 'vue'
 
 export type UserStateType = {
   username: string
@@ -7,19 +7,20 @@ export type UserStateType = {
 }
 
 export const useUserInfo = defineStore('user', () => {
-  const userInfo = reactive<UserStateType>({
+  const userInfo = ref<UserStateType>({
     username: '',
     nickname: ''
   })
 
   function login(info: UserStateType) {
-    userInfo.username = info.username
-    userInfo.nickname = info.nickname
+    userInfo.value = info
   }
 
   function logout() {
-    userInfo.username = ''
-    userInfo.nickname = ''
+    userInfo.value = {
+      username: '',
+      nickname: ''
+    }
   }
 
   return {
