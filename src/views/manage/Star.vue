@@ -25,7 +25,9 @@
       </template>
     </template>
   </div>
-  <div class="footer">分页</div>
+  <div class="footer">
+    <ListPage :total="data?.total" />
+  </div>
 </template>
 
 <script setup lang="ts">
