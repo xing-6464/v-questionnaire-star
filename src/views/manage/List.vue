@@ -8,8 +8,11 @@
     </div>
   </div>
   <div class="content">
-    <template v-if="questionList.length > 0">
-      <template v-for="item in questionList" :key="item._id">
+    <div v-if="loading" style="text-align: center">
+      <a-spin></a-spin>
+    </div>
+    <template v-if="!loading && data && data.list.length > 0">
+      <template v-for="item in data.list" :key="item._id">
         <QuestionCard
           :_id="item._id"
           :answer-count="item.answerCount"
@@ -28,35 +31,11 @@
 import QuestionCard from '@/components/QuestionCard.vue'
 import ListSearch from '@/components/ListSearch.vue'
 import { useTitle } from '@vueuse/core'
-import { ref } from 'vue'
-const rawQuestionList = [
-  {
-    _id: 'q1',
-    title: '问卷1',
-    isPublished: false,
-    isStar: false,
-    answerCount: 5,
-    createdAt: '3月10日 13:23'
-  },
-  {
-    _id: 'q2',
-    title: '问卷2',
-    isPublished: true,
-    isStar: true,
-    answerCount: 5,
-    createdAt: '3月11日 13:23'
-  },
-  {
-    _id: 'q3',
-    title: '问卷3',
-    isPublished: false,
-    isStar: true,
-    answerCount: 6,
-    createdAt: '3月12日 13:23'
-  }
-]
+import { getQuestionListService } from '@/services/question'
+import { useRequest } from 'vue-request'
 
-const questionList = ref(rawQuestionList)
+const { data, loading } = useRequest(getQuestionListService)
+
 useTitle('小星问卷 - 我的问卷')
 </script>
 

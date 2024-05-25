@@ -22,6 +22,7 @@ declare module 'vue' {
     ALayoutHeader: typeof import('ant-design-vue/es')['LayoutHeader']
     APopconfirm: typeof import('ant-design-vue/es')['Popconfirm']
     ASpace: typeof import('ant-design-vue/es')['Space']
+    ASpin: typeof import('ant-design-vue/es')['Spin']
     ATable: typeof import('ant-design-vue/es')['Table']
     ATag: typeof import('ant-design-vue/es')['Tag']
     ATypographyParagraph: typeof import('ant-design-vue/es')['TypographyParagraph']
