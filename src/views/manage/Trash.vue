@@ -41,7 +41,9 @@
       </a-table>
     </template>
   </div>
-  <div class="footer">分页</div>
+  <div class="footer">
+    <ListPage :total="data?.total" />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -50,6 +52,7 @@ import { Modal, message } from 'ant-design-vue'
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
 import ListSearch from '@/components/ListSearch.vue'
 import useLoadQuestionListData from '@/hooks/useLoadQuestionListData'
+import ListPage from '@/components/ListPage.vue'
 
 const tableColumns = [
   {

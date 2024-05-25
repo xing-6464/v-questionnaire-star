@@ -31,6 +31,12 @@
 import QuestionCard from '@/components/QuestionCard.vue'
 import ListSearch from '@/components/ListSearch.vue'
 import useLoadQuestionListData from '@/hooks/useLoadQuestionListData'
+import { computed, ref } from 'vue'
+
+const list = ref<any[]>([]) // 列表数据
+const page = ref(1) // 请求页码
+const total = ref(0)
+const haveMoreData = computed(() => total.value > list.value.length)
 
 const { data, loading } = useLoadQuestionListData()
 </script>
