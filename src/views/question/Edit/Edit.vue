@@ -7,9 +7,9 @@
 </template>
 
 <script setup lang="ts">
-import useQuestionData from '@/hooks/useQuestionData'
+import useLoadQuestionData from '@/hooks/useLoadQuestionData'
 
-const { data, loading, error } = useQuestionData()
+const { data, loading } = useLoadQuestionData()
 </script>
 
 <style scoped lang="scss"></style>

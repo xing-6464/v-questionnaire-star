@@ -7,7 +7,7 @@
           size="large"
           :icon="h(PlusOutlined)"
           @click="handleCreateClick"
-          :loading="isLoading"
+          :loading="loading"
         >
           创建问卷
         </a-button>
@@ -53,30 +53,18 @@ import { h } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { PlusOutlined, BarsOutlined, StarOutlined, DeleteOutlined } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue'
-import useAxios from '@/services/ajax'
+import { useRequest } from 'vue-request'
+import { createQuestionService } from '@/services/question'
 
 const router = useRouter()
 const route = useRoute()
-const { execute, isLoading } = useAxios(
-  '/api/question',
-  { method: 'POST' },
-  {
-    immediate: false
+const { loading, run: handleCreateClick } = useRequest(createQuestionService, {
+  manual: true,
+  onSuccess(res) {
+    router.push(`/question/edit/${res.id}`)
+    message.success('创建成功')
   }
-)
-
-function handleCreateClick() {
-  execute()
-    .then(({ isFinished, response }) => {
-      if (isFinished) {
-        message.success('创建成功')
-        router.push(`/question/edit/${(response.value as any).id}`)
-      }
-    })
-    .catch(() => {
-      message.error('创建失败')
-    })
-}
+})
 </script>
 
 <style scoped lang="scss">
