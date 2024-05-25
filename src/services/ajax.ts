@@ -1,9 +1,19 @@
+import { getToken } from '@/utils/user-token'
 import { message } from 'ant-design-vue'
 import axios from 'axios'
 
 const instance = axios.create({
   timeout: 10 * 1000
 })
+
+// request 拦截器 每次请求带上token
+instance.interceptors.request.use(
+  (config) => {
+    config.headers['Authorization'] = `Bearer ${getToken()}` // JWT 固定格式
+    return config
+  },
+  (error) => Promise.reject(error)
+)
 
 // response 拦截器
 instance.interceptors.response.use((res) => {

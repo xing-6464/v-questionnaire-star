@@ -43,6 +43,7 @@ import type { Rule } from 'ant-design-vue/es/form'
 import { useRequest } from 'vue-request'
 import { loginService } from '@/services/user'
 import { message } from 'ant-design-vue'
+import { setToken } from '@/utils/user-token'
 
 const USERNAME_KEY = 'USERNAME'
 const PASSWORD_KEY = 'PASSWORD'
@@ -77,6 +78,9 @@ const { run } = useRequest(
   {
     manual: true,
     onSuccess(res) {
+      const { token } = res
+      // 存储 token
+      setToken(token)
       message.success('登录成功')
       router.push(MANAGE_INDEX_PATHNAME)
     }
