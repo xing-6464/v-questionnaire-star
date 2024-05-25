@@ -11,8 +11,8 @@
     <div v-if="loading" style="text-align: center">
       <a-spin></a-spin>
     </div>
-    <template v-if="!loading && data && data.list.length > 0">
-      <template v-for="item in data.list" :key="item._id">
+    <template v-if="!loading && list.length > 0">
+      <template v-for="item in list" :key="item._id">
         <QuestionCard
           :_id="item._id"
           :answer-count="item.answerCount"
@@ -32,10 +32,12 @@
 <script setup lang="ts">
 import QuestionCard from '@/components/QuestionCard.vue'
 import ListSearch from '@/components/ListSearch.vue'
-import useLoadQuestionListData from '@/hooks/useLoadQuestionListData'
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import { useDebounceFn } from '@vueuse/core'
+import { useRequest } from 'vue-request'
+import { getQuestionListService } from '@/services/question'
+import { LIST_SEARCH_PARAM_KEY, PAGE_SIZE } from '@/constant'
 
 const route = useRoute()
 const loadMoreRef = ref<HTMLDivElement | null>(null)
@@ -44,8 +46,30 @@ const page = ref(1) // 请求页码
 const total = ref(0)
 const haveMoreData = computed(() => total.value > list.value.length)
 
-const { data, loading } = useLoadQuestionListData()
+// 真正加载
+const { run: load, loading } = useRequest(
+  async () => {
+    const data = await getQuestionListService({
+      page: page.value,
+      pageSize: PAGE_SIZE,
+      keyword: (route.query[LIST_SEARCH_PARAM_KEY] || '') as string
+    })
 
+    return data
+  },
+  {
+    manual: true,
+    onSuccess: (res) => {
+      const { list: l = [], total: t = 0 } = res
+      list.value = list.value.concat(l)
+      console.log(list.value)
+      total.value = t
+      page.value += 1
+    }
+  }
+)
+
+// 尝试加载
 const tryLoadMore = useDebounceFn(() => {
   const elem = loadMoreRef.value
   if (elem === null) return
@@ -55,7 +79,7 @@ const tryLoadMore = useDebounceFn(() => {
 
   const { bottom } = domRect
   if (bottom <= document.body.clientHeight) {
-    console.log('执行加载')
+    load()
   }
 }, 500)
 
@@ -70,22 +94,16 @@ watch(
   }
 )
 
-// 监听列表数据变化，更新页码
-watch(
-  () => route.query,
-  () => {
-    // if (haveMoreData.value) {
+// 监听列表数据变化，更新数据
+watch(haveMoreData, (newValue) => {
+  if (newValue) {
     window.addEventListener('scroll', tryLoadMore)
-    // }
-
-    return () => {
-      window.removeEventListener('scroll', tryLoadMore)
-    }
-  },
-  {
-    immediate: true
   }
-)
+
+  return () => {
+    window.removeEventListener('scroll', tryLoadMore)
+  }
+})
 </script>
 
 <style scoped lang="scss">
