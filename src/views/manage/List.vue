@@ -30,12 +30,9 @@
 <script setup lang="ts">
 import QuestionCard from '@/components/QuestionCard.vue'
 import ListSearch from '@/components/ListSearch.vue'
-import { useTitle } from '@vueuse/core'
 import useLoadQuestionListData from '@/hooks/useLoadQuestionListData'
 
 const { data, loading } = useLoadQuestionListData()
-
-useTitle('小星问卷 - 我的问卷')
 </script>
 
 <style scoped lang="scss">
