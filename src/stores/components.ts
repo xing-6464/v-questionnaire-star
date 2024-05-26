@@ -45,12 +45,26 @@ export const useComponentsStore = defineStore('components', () => {
     selectedId.value = newComponent.fe_id
   }
 
+  // 修改组件属性
+  function changeComponentProps(payload: { fe_id: string; props: ComponentPropsType }) {
+    const { fe_id, props } = payload
+    // 当前要修改的组件
+    const curComp = componentList.value?.find((c) => c.fe_id === fe_id)
+    if (curComp) {
+      curComp.props = {
+        ...curComp.props,
+        ...props
+      }
+    }
+  }
+
   return {
     componentList,
     selectedId,
     selectedComponent,
     resetComponents,
     changeSelectedId,
-    addComponent
+    addComponent,
+    changeComponentProps
   }
 })

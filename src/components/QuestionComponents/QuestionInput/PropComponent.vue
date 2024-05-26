@@ -14,6 +14,7 @@ import { reactive, watch } from 'vue'
 import { type QuestionInputPropsType } from './interface'
 
 const props = defineProps<QuestionInputPropsType>()
+const emits = defineEmits<{ change: [newProps: QuestionInputPropsType] }>()
 
 const formState = reactive({
   title: props.title || '',
@@ -28,4 +29,8 @@ watch(
   },
   { immediate: true }
 )
+
+watch(formState, (newState) => {
+  emits('change', newState)
+})
 </script>

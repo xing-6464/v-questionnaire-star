@@ -1,14 +1,15 @@
 <template>
-  <template v-if="type === 'questionTitle'">
-    <QuestionTitle v-bind="props" />
-  </template>
-  <template v-else-if="type === 'questionInput'">
-    <QuestionInput v-bind="props" />
+  <template v-if="componentConf == null"></template>
+  <template v-else>
+    <component :is="componentConf.Component" v-bind="componentInfo.props" />
   </template>
 </template>
 
 <script setup lang="ts">
-import QuestionInput from '@/components/QuestionComponents/QuestionInput/Component.vue'
-import QuestionTitle from '@/components/QuestionComponents/QuestionTitle/Component.vue'
-defineProps<{ type: string; props: any }>()
+import { computed } from 'vue'
+import { getComponentConfByType } from '@/components/QuestionComponents'
+import type { ComponentInfoType } from '@/stores/components'
+
+const props = defineProps<{ componentInfo: ComponentInfoType }>()
+const componentConf = computed(() => getComponentConfByType(props.componentInfo.type))
 </script>

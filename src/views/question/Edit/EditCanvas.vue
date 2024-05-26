@@ -11,7 +11,7 @@
         @click.stop="handleClick(component.fe_id)"
       >
         <div class="component">
-          <GenComponent :type="component.type" :props="component.props" />
+          <GenComponent :component-info="component" />
         </div>
       </div>
     </template>

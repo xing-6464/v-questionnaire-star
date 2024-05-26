@@ -28,6 +28,7 @@ import { reactive, watch } from 'vue'
 import { type QuestionTitlePropsType } from './interface'
 
 const props = defineProps<QuestionTitlePropsType>()
+const emits = defineEmits<{ change: [value: QuestionTitlePropsType] }>()
 
 const formState = reactive({
   text: props.text || '',
@@ -39,5 +40,9 @@ watch([() => props.text, () => props.level, () => props.isCenter], ([text, level
   formState.text = text ? text : ''
   formState.level = level ? level : 1
   formState.isCenter = isCenter ? isCenter : false
+})
+
+watch(formState, (newFormState) => {
+  emits('change', newFormState)
 })
 </script>

@@ -3,7 +3,11 @@
     未选中组件
   </div>
   <template v-else>
-    <component :is="componentConf.PropComponent" v-bind="selectedComponent.props" />
+    <component
+      :is="componentConf.PropComponent"
+      v-bind="selectedComponent.props"
+      @change="onChange"
+    />
   </template>
 </template>
 
@@ -12,6 +16,12 @@ import { getComponentConfByType } from '@/components/QuestionComponents'
 import useGetComponentInfo from '@/hooks/useGetComponentInfo'
 import { computed } from 'vue'
 
-const { selectedComponent } = useGetComponentInfo()
+const { selectedComponent, changeComponentProps } = useGetComponentInfo()
 const componentConf = computed(() => getComponentConfByType(selectedComponent.value?.type || ''))
+
+function onChange(value: any) {
+  if (selectedComponent.value == null) return
+  const { fe_id } = selectedComponent.value
+  changeComponentProps({ fe_id, props: value })
+}
 </script>
