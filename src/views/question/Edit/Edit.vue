@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div style="background-color: #fff; height: 40px">Header</div>
+    <EditHeader />
     <div class="content-wrapper">
       <div class="content">
         <div class="left">
@@ -22,6 +22,7 @@
 <script setup lang="ts">
 import useGetComponentInfo from '@/hooks/useGetComponentInfo'
 import useLoadQuestionData from '@/hooks/useLoadQuestionData'
+import EditHeader from './EditHeader.vue'
 import EditCanvas from './EditCanvas.vue'
 import LeftPanel from './LeftPanel.vue'
 import RightPanel from './RightPanel.vue'
