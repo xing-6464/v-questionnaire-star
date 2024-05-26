@@ -13,4 +13,6 @@ import { QuestionInputDefaultProps, type QuestionInputPropsType } from './interf
 defineOptions({ name: 'QuestionInput' })
 
 const props = withDefaults(defineProps<QuestionInputPropsType>(), QuestionInputDefaultProps)
+
+console.log(props)
 </script>

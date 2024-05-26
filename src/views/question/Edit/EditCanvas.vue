@@ -5,28 +5,23 @@
     </div>
   </template>
   <div v-else class="canvas">
-    <div class="component-wrapper">
-      <div class="component">
-        <QuestionTitle />
+    <template v-for="component in componentList" :key="component.id">
+      <div class="component-wrapper">
+        <div class="component">
+          <GenComponent :type="component.type" :props="component.props" />
+        </div>
       </div>
-    </div>
-    <div class="component-wrapper">
-      <div class="component">
-        <QuestionInput />
-      </div>
-    </div>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
-import QuestionInput from '@/components/QuestionComponents/QuestionInput/Component.vue'
-import QuestionTitle from '@/components/QuestionComponents/QuestionTitle/Component.vue'
 import useGetComponentInfo from '@/hooks/useGetComponentInfo'
+import GenComponent from './GenComponent.vue'
 
 defineProps<{ loading: boolean }>()
 
 const { componentList } = useGetComponentInfo()
-console.log(componentList.value)
 </script>
 
 <style scoped lang="scss">
