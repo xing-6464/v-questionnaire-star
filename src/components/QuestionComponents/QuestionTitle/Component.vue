@@ -14,6 +14,8 @@
 <script setup lang="ts">
 import { QuestionTitleDefaultProps, type QuestionTitlePropsType } from './interface'
 
+defineOptions({ name: 'QuestionTitle' })
+
 const props = withDefaults(defineProps<QuestionTitlePropsType>(), QuestionTitleDefaultProps)
 
 function genFontSize(level: number) {

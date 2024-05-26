@@ -6,7 +6,7 @@
         <div class="left">left</div>
         <div class="main">
           <div class="canvas-wrapper">
-            <div style="height: 900px">滚</div>
+            <EditCanvas />
           </div>
         </div>
         <div class="right">right</div>
@@ -16,6 +16,7 @@
 </template>
 
 <script setup lang="ts">
+import EditCanvas from './EditCanvas.vue'
 import useLoadQuestionData from '@/hooks/useLoadQuestionData'
 
 const { data, loading } = useLoadQuestionData()

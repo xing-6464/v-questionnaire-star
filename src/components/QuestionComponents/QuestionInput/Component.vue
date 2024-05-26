@@ -10,5 +10,7 @@
 <script setup lang="ts">
 import { QuestionInputDefaultProps, type QuestionInputPropsType } from './interface'
 
+defineOptions({ name: 'QuestionInput' })
+
 const props = withDefaults(defineProps<QuestionInputPropsType>(), QuestionInputDefaultProps)
 </script>
