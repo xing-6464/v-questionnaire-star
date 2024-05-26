@@ -7,7 +7,7 @@
       fontSize: genFontSize(level)
     }"
   >
-    {{ title }}
+    {{ text }}
   </ATypographyTitle>
 </template>
 
