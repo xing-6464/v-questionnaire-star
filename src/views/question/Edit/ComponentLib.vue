@@ -6,7 +6,7 @@
       >{{ group.groupName }}</ATypographyTitle
     >
     <div>
-      <div v-for="c in group.components" :key="c.title" class="wrapper" @click="handleClick(c)">
+      <div v-for="c in group.components" :key="c.type" class="wrapper" @click="handleClick(c)">
         <div class="component">
           <component :is="c.Component" />
         </div>
