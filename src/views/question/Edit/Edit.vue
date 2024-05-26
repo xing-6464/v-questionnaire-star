@@ -6,7 +6,7 @@
         <div class="left">left</div>
         <div class="main">
           <div class="canvas-wrapper">
-            <EditCanvas />
+            <EditCanvas :loading="loading" />
           </div>
         </div>
         <div class="right">right</div>
@@ -19,7 +19,7 @@
 import EditCanvas from './EditCanvas.vue'
 import useLoadQuestionData from '@/hooks/useLoadQuestionData'
 
-const { data, loading } = useLoadQuestionData()
+const { loading } = useLoadQuestionData()
 </script>
 
 <style scoped lang="scss">

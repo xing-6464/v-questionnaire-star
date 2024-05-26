@@ -1,5 +1,10 @@
 <template>
-  <div class="canvas">
+  <template v-if="loading">
+    <div style="text-align: center; margin-top: 24px">
+      <ASpin />
+    </div>
+  </template>
+  <div v-else class="canvas">
     <div class="component-wrapper">
       <div class="component">
         <QuestionTitle />
@@ -16,6 +21,8 @@
 <script setup lang="ts">
 import QuestionInput from '@/components/QuestionComponents/QuestionInput/Component.vue'
 import QuestionTitle from '@/components/QuestionComponents/QuestionTitle/Component.vue'
+
+defineProps<{ loading: boolean }>()
 </script>
 
 <style scoped lang="scss">
