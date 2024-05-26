@@ -4,7 +4,7 @@
     <div class="content-wrapper">
       <div class="content">
         <div class="left">left</div>
-        <div class="main">
+        <div class="main" @click="handleSelectedId">
           <div class="canvas-wrapper">
             <EditCanvas :loading="loading" />
           </div>
@@ -16,10 +16,16 @@
 </template>
 
 <script setup lang="ts">
+import useGetComponentInfo from '@/hooks/useGetComponentInfo'
 import EditCanvas from './EditCanvas.vue'
 import useLoadQuestionData from '@/hooks/useLoadQuestionData'
 
 const { loading } = useLoadQuestionData()
+const { changeSelectedId } = useGetComponentInfo()
+
+function handleSelectedId() {
+  changeSelectedId('')
+}
 </script>
 
 <style scoped lang="scss">

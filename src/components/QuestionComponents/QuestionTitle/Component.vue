@@ -16,7 +16,7 @@ import { QuestionTitleDefaultProps, type QuestionTitlePropsType } from './interf
 
 defineOptions({ name: 'QuestionTitle' })
 
-const props = withDefaults(defineProps<QuestionTitlePropsType>(), QuestionTitleDefaultProps)
+withDefaults(defineProps<QuestionTitlePropsType>(), QuestionTitleDefaultProps)
 
 function genFontSize(level: number) {
   if (level === 1) return '24px'

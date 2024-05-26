@@ -1,6 +1,7 @@
-import { defineStore } from 'pinia'
-import { type ComponentPropsType } from '@/components/QuestionComponents'
 import { ref } from 'vue'
+import { defineStore } from 'pinia'
+
+import { type ComponentPropsType } from '@/components/QuestionComponents'
 
 export type ComponentInfoType = {
   fe_id: string
@@ -11,13 +12,23 @@ export type ComponentInfoType = {
 
 export const useComponentsStore = defineStore('components', () => {
   const componentList = ref<ComponentInfoType[]>()
+  const selectedId = ref('')
 
-  function resetComponents(payload: ComponentInfoType[]) {
-    componentList.value = payload
+  // 重置 componentList
+  function resetComponents(payload: { componentList: ComponentInfoType[]; selectedId: string }) {
+    componentList.value = payload.componentList
+    selectedId.value = payload.selectedId
+  }
+
+  // 修改 selectedId
+  function changeSelectedId(id: string) {
+    selectedId.value = id
   }
 
   return {
     componentList,
-    resetComponents
+    selectedId,
+    resetComponents,
+    changeSelectedId
   }
 })

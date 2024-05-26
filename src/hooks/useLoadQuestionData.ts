@@ -41,8 +41,14 @@ function useLoadQuestionData() {
       if (!newData) return
       const { title = '', componentList = [] } = newData
 
+      // 获取默认 selectedId
+      let selectedId = ''
+      if (componentList.length > 0) {
+        selectedId = componentList[0].fe_id // 默认选中第一个 component
+      }
+
       // 把componentList 存入 store
-      store.resetComponents(componentList)
+      store.resetComponents({ componentList, selectedId })
     },
     {
       immediate: true

@@ -5,8 +5,11 @@
     </div>
   </template>
   <div v-else class="canvas">
-    <template v-for="component in componentList" :key="component.id">
-      <div class="component-wrapper">
+    <template v-for="component in componentList" :key="component.fe_id">
+      <div
+        :class="{ 'component-wrapper': true, selected: component.fe_id === selectedId }"
+        @click.stop="handleClick(component.fe_id)"
+      >
         <div class="component">
           <GenComponent :type="component.type" :props="component.props" />
         </div>
@@ -21,7 +24,11 @@ import GenComponent from './GenComponent.vue'
 
 defineProps<{ loading: boolean }>()
 
-const { componentList } = useGetComponentInfo()
+const { componentList, selectedId, changeSelectedId } = useGetComponentInfo()
+
+function handleClick(id: string) {
+  changeSelectedId(id)
+}
 </script>
 
 <style scoped lang="scss">
@@ -39,6 +46,9 @@ const { componentList } = useGetComponentInfo()
   &:hover {
     border-color: #d9d9d9;
   }
+}
+.selected {
+  border-color: #1890ff !important;
 }
 .component {
   pointer-events: none;

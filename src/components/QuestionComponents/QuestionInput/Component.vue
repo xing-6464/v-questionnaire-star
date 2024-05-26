@@ -11,8 +11,5 @@
 import { QuestionInputDefaultProps, type QuestionInputPropsType } from './interface'
 
 defineOptions({ name: 'QuestionInput' })
-
-const props = withDefaults(defineProps<QuestionInputPropsType>(), QuestionInputDefaultProps)
-
-console.log(props)
+withDefaults(defineProps<QuestionInputPropsType>(), QuestionInputDefaultProps)
 </script>
