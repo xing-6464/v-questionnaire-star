@@ -1,5 +1,5 @@
 <template>
-  <AForm :model="formState" layout="vertical">
+  <AForm :model="formState" layout="vertical" :disabled="disabled">
     <AFormItem
       label="标题内容"
       name="text"

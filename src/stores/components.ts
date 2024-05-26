@@ -9,6 +9,7 @@ export type ComponentInfoType = {
   type: string
   title: string
   isHidden?: boolean
+  isLocked?: boolean
   props: ComponentPropsType
 }
 
@@ -73,25 +74,35 @@ export const useComponentsStore = defineStore('components', () => {
   }
 
   // 隐藏/显示组件
-  function changeComponentHidden(payload: { isHidden: boolean }) {
-    const { isHidden } = payload
+  function changeComponentHidden(payload: { fe_id: string; isHidden: boolean }) {
+    const { isHidden, fe_id } = payload
     const componentListVal = componentList.value
-    const selectedIdVal = selectedId.value
 
     let newSelectedId = ''
     if (isHidden) {
       // 隐藏当前组件
-      newSelectedId = getNextSelectedId(selectedIdVal, componentListVal!)
+      newSelectedId = getNextSelectedId(fe_id, componentListVal!)
     } else {
       // 显示当前组件
-      newSelectedId = selectedIdVal
+      newSelectedId = fe_id
     }
 
-    const curComp = componentListVal?.find((c) => c.fe_id === selectedIdVal)
+    const curComp = componentListVal?.find((c) => c.fe_id === fe_id)
     if (curComp) {
       curComp.isHidden = true
     }
     selectedId.value = newSelectedId
+  }
+
+  // 锁定/解锁组件
+  function toggleComponentLocked(payload: { fe_id: string }) {
+    const { fe_id } = payload
+    const componentListVal = componentList.value
+
+    const curComp = componentListVal?.find((c) => c.fe_id === fe_id)
+    if (curComp) {
+      curComp.isLocked = !curComp.isLocked
+    }
   }
 
   return {
@@ -103,6 +114,7 @@ export const useComponentsStore = defineStore('components', () => {
     addComponent,
     changeComponentProps,
     removeSelectedComponent,
-    changeComponentHidden
+    changeComponentHidden,
+    toggleComponentLocked
   }
 })

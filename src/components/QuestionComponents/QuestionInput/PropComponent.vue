@@ -1,5 +1,5 @@
 <template>
-  <AForm layout="vertical" :model="formState">
+  <AForm layout="vertical" :model="formState" :disabled="disabled">
     <AFormItem label="标题" name="title" :rules="[{ required: true, message: '请输入标题' }]">
       <AInput v-model:value="formState.title" />
     </AFormItem>

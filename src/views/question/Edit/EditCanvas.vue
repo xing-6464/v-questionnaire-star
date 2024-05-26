@@ -5,9 +5,16 @@
     </div>
   </template>
   <div v-else class="canvas">
-    <template v-for="component in componentList?.filter((c) => !c.isHidden)" :key="component.fe_id">
+    <template
+      v-for="component in componentList?.filter((c: any) => !c.isHidden)"
+      :key="component.fe_id"
+    >
       <div
-        :class="{ 'component-wrapper': true, selected: component.fe_id === selectedId }"
+        :class="{
+          'component-wrapper': true,
+          selected: component.fe_id === selectedId,
+          locked: component.isLocked
+        }"
         @click.stop="handleClick(component.fe_id)"
       >
         <div class="component">
@@ -46,6 +53,10 @@ function handleClick(id: string) {
   &:hover {
     border-color: #d9d9d9;
   }
+}
+.locked {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 .selected {
   border-color: #1890ff !important;

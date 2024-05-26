@@ -6,6 +6,7 @@
     <component
       :is="componentConf.PropComponent"
       v-bind="selectedComponent.props"
+      :disabled="selectedComponent.isLocked || selectedComponent.isHidden"
       @change="onChange"
     />
   </template>
