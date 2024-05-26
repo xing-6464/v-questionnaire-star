@@ -1,8 +1,17 @@
 <template>
-  <div>
-    <p>Edit page</p>
-    <p v-if="loading">loading...</p>
-    <div v-else>{{ JSON.stringify(data) }}</div>
+  <div class="container">
+    <div style="background-color: #fff; height: 40px">Header</div>
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="left">left</div>
+        <div class="main">
+          <div class="canvas-wrapper">
+            <div style="height: 900px">滚</div>
+          </div>
+        </div>
+        <div class="right">right</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -12,4 +21,51 @@ import useLoadQuestionData from '@/hooks/useLoadQuestionData'
 const { data, loading } = useLoadQuestionData()
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f0f2f5;
+
+  .content-wrapper {
+    flex: auto;
+    padding: 12px 0;
+
+    .content {
+      margin: 0 24px;
+      display: flex;
+      height: 100%;
+
+      .left {
+        width: 285px;
+        background-color: #fff;
+        padding: 0 12px;
+      }
+
+      .main {
+        flex: 1;
+        position: relative;
+
+        .canvas-wrapper {
+          position: absolute;
+          width: 400px;
+          height: 712px;
+          top: 50%;
+          left: 50%;
+          transform: translateX(-50%) translateY(-50%);
+          background-color: #fff;
+          overflow: auto;
+          box-shadow: 0 2px 10px #0000001f;
+        }
+      }
+
+      .right {
+        width: 300px;
+        background-color: #fff;
+        padding: 0 12px;
+      }
+    }
+  }
+}
+</style>

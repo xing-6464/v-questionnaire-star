@@ -1,7 +1,5 @@
 <template>
-  <div>Question</div>
-
-  <div>
+  <div style="height: 100vh">
     <div v-if="waitingUserData" style="text-align: center; margin-top: 60px">
       <a-spin />
     </div>
