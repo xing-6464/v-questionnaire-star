@@ -2,6 +2,7 @@ import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 
 import { type ComponentPropsType } from '@/components/QuestionComponents'
+import { getNextSelectedId } from './utils'
 
 export type ComponentInfoType = {
   fe_id: string
@@ -58,6 +59,18 @@ export const useComponentsStore = defineStore('components', () => {
     }
   }
 
+  // 删除选中的组件
+  function removeSelectedComponent() {
+    const selectedIdVal = selectedId.value
+    const componentListVal = componentList.value
+
+    const nextSelectedId = getNextSelectedId(selectedIdVal, componentListVal!)
+
+    const index = componentListVal?.findIndex((c) => c.fe_id === selectedIdVal)
+    componentListVal?.splice(index!, 1)
+    selectedId.value = nextSelectedId
+  }
+
   return {
     componentList,
     selectedId,
@@ -65,6 +78,7 @@ export const useComponentsStore = defineStore('components', () => {
     resetComponents,
     changeSelectedId,
     addComponent,
-    changeComponentProps
+    changeComponentProps,
+    removeSelectedComponent
   }
 })

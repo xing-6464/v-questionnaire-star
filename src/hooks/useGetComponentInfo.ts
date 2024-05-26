@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia'
 function useGetComponentInfo() {
   const store = useComponentsStore()
   const { componentList, selectedId, selectedComponent } = storeToRefs(store)
-  const { changeSelectedId, addComponent, changeComponentProps } = store
+  const { changeSelectedId, addComponent, changeComponentProps, removeSelectedComponent } = store
 
   return {
     componentList,
@@ -12,7 +12,8 @@ function useGetComponentInfo() {
     selectedComponent,
     changeSelectedId,
     addComponent,
-    changeComponentProps
+    changeComponentProps,
+    removeSelectedComponent
   }
 }
 

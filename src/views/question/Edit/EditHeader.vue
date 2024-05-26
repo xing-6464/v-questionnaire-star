@@ -7,7 +7,9 @@
           <ATypographyTitle>问卷标题</ATypographyTitle>
         </ASpace>
       </div>
-      <div class="main">中</div>
+      <div class="main">
+        <EditToolbar />
+      </div>
       <div class="right">
         <ASpace>
           <AButton>保存</AButton>
@@ -22,6 +24,7 @@
 import { h } from 'vue'
 import { LeftOutlined } from '@ant-design/icons-vue'
 import { useRouter } from 'vue-router'
+import EditToolbar from './EditToolbar.vue'
 
 const router = useRouter()
 </script>
