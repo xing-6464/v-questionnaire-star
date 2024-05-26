@@ -1,4 +1,5 @@
 import { QuestionTitleDefaultProps } from './interface'
+import Component from './Component.vue'
 
 export * from './interface'
 
@@ -6,5 +7,6 @@ export * from './interface'
 export default {
   title: '输入框',
   type: 'questionTitle',
+  Component,
   defaultProps: QuestionTitleDefaultProps
 }
