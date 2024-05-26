@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 
 import { type ComponentPropsType } from '@/components/QuestionComponents'
@@ -13,6 +13,10 @@ export type ComponentInfoType = {
 export const useComponentsStore = defineStore('components', () => {
   const componentList = ref<ComponentInfoType[]>()
   const selectedId = ref('')
+
+  const selectedComponent = computed(() =>
+    componentList.value?.find((c) => c.fe_id === selectedId.value)
+  )
 
   // 重置 componentList
   function resetComponents(payload: { componentList: ComponentInfoType[]; selectedId: string }) {
@@ -32,7 +36,7 @@ export const useComponentsStore = defineStore('components', () => {
     const componentListVal = componentList.value
 
     const index = componentListVal?.findIndex((c) => c.fe_id === selectedIdVal)
-    if (!index) return
+    if (index == null) return
     if (index < 0) {
       componentListVal?.push(newComponent)
     } else {
@@ -44,6 +48,7 @@ export const useComponentsStore = defineStore('components', () => {
   return {
     componentList,
     selectedId,
+    selectedComponent,
     resetComponents,
     changeSelectedId,
     addComponent

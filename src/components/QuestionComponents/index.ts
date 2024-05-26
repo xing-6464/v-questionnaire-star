@@ -9,6 +9,7 @@ export type ComponentConfType = {
   title: string
   type: string
   Component: Component<ComponentPropsType>
+  PropComponent: Component<ComponentPropsType>
   defaultProps: ComponentPropsType
 }
 

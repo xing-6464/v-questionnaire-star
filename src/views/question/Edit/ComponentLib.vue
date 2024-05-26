@@ -3,8 +3,9 @@
     <ATypographyTitle
       :level="3"
       :style="{ fontSize: '16px', marginTop: index > 0 ? '20px' : '0px' }"
-      >{{ group.groupName }}</ATypographyTitle
     >
+      {{ group.groupName }}
+    </ATypographyTitle>
     <div>
       <div v-for="c in group.components" :key="c.type" class="wrapper" @click="handleClick(c)">
         <div class="component">

@@ -5,7 +5,7 @@
       name="text"
       :rules="[{ required: true, message: '请输入标题内容' }]"
     >
-      <AInput v-model="formState.text" />
+      <AInput v-model:value="formState.text" />
     </AFormItem>
     <AFormItem label="层级" name="level">
       <ASelect

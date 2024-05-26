@@ -11,7 +11,9 @@
             <EditCanvas :loading="loading" />
           </div>
         </div>
-        <div class="right">right</div>
+        <div class="right">
+          <RightPanel />
+        </div>
       </div>
     </div>
   </div>
@@ -22,6 +24,7 @@ import useGetComponentInfo from '@/hooks/useGetComponentInfo'
 import useLoadQuestionData from '@/hooks/useLoadQuestionData'
 import EditCanvas from './EditCanvas.vue'
 import LeftPanel from './LeftPanel.vue'
+import RightPanel from './RightPanel.vue'
 
 const { loading } = useLoadQuestionData()
 const { changeSelectedId } = useGetComponentInfo()
