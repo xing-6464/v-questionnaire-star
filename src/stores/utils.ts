@@ -1,3 +1,4 @@
+import type { Ref } from 'vue'
 import { type ComponentInfoType } from './components'
 export function getNextSelectedId(fe_id: string, componentList: ComponentInfoType[]) {
   const visibleComponentList = componentList.filter((c) => !c.isHidden)
@@ -20,4 +21,21 @@ export function getNextSelectedId(fe_id: string, componentList: ComponentInfoTyp
   }
 
   return newSelectedId
+}
+
+export function insertNewComponent(
+  state: { componentList: Ref<ComponentInfoType[] | undefined>; selectedId: Ref<string> },
+  newComponent: ComponentInfoType
+) {
+  const selectedIdVal = state.selectedId.value
+  const componentListVal = state.componentList.value
+
+  const index = componentListVal?.findIndex((c) => c.fe_id === selectedIdVal)
+  if (index == null) return
+  if (index < 0) {
+    componentListVal?.push(newComponent)
+  } else {
+    componentListVal?.splice(index + 1, 0, newComponent)
+  }
+  state.selectedId.value = newComponent.fe_id
 }

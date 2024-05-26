@@ -47,7 +47,7 @@ function useLoadQuestionData() {
       }
 
       // 把componentList 存入 store
-      store.resetComponents({ componentList, selectedId })
+      store.resetComponents({ componentList, selectedId, copiedComponent: null })
     },
     {
       immediate: true

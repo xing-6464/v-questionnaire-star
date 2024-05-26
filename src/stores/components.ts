@@ -1,8 +1,10 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
+import cloneDeep from 'lodash.clonedeep'
+import { nanoid } from 'nanoid'
 
 import { type ComponentPropsType } from '@/components/QuestionComponents'
-import { getNextSelectedId } from './utils'
+import { getNextSelectedId, insertNewComponent } from './utils'
 
 export type ComponentInfoType = {
   fe_id: string
@@ -16,15 +18,21 @@ export type ComponentInfoType = {
 export const useComponentsStore = defineStore('components', () => {
   const componentList = ref<ComponentInfoType[]>()
   const selectedId = ref('')
+  const copiedComponent = ref<ComponentInfoType | null>(null)
 
   const selectedComponent = computed(() =>
     componentList.value?.find((c) => c.fe_id === selectedId.value)
   )
 
   // 重置 componentList
-  function resetComponents(payload: { componentList: ComponentInfoType[]; selectedId: string }) {
+  function resetComponents(payload: {
+    componentList: ComponentInfoType[]
+    selectedId: string
+    copiedComponent: ComponentInfoType | null
+  }) {
     componentList.value = payload.componentList
     selectedId.value = payload.selectedId
+    copiedComponent.value = payload.copiedComponent
   }
 
   // 修改 selectedId
@@ -34,18 +42,7 @@ export const useComponentsStore = defineStore('components', () => {
 
   // 新增 component
   function addComponent(payload: ComponentInfoType) {
-    const newComponent = payload
-    const selectedIdVal = selectedId.value
-    const componentListVal = componentList.value
-
-    const index = componentListVal?.findIndex((c) => c.fe_id === selectedIdVal)
-    if (index == null) return
-    if (index < 0) {
-      componentListVal?.push(newComponent)
-    } else {
-      componentListVal?.splice(index + 1, 0, newComponent)
-    }
-    selectedId.value = newComponent.fe_id
+    insertNewComponent({ componentList, selectedId }, payload)
   }
 
   // 修改组件属性
@@ -105,16 +102,38 @@ export const useComponentsStore = defineStore('components', () => {
     }
   }
 
+  // 复制选中的组件
+  function copySelectedComponent() {
+    const selectedComponentVal = selectedComponent.value
+
+    if (selectedComponentVal == null) return
+    copiedComponent.value = cloneDeep(selectedComponentVal) // 深拷贝
+  }
+
+  // 粘贴组件
+  function pasteCopiedComponent() {
+    const copiedComponentVal = { ...copiedComponent.value }
+
+    if (copiedComponentVal == null) return
+    copiedComponentVal.fe_id = nanoid(10)
+
+    // 新增组件
+    insertNewComponent({ componentList, selectedId }, copiedComponentVal as ComponentInfoType)
+  }
+
   return {
     componentList,
     selectedId,
     selectedComponent,
+    copiedComponent,
     resetComponents,
     changeSelectedId,
     addComponent,
     changeComponentProps,
     removeSelectedComponent,
     changeComponentHidden,
-    toggleComponentLocked
+    toggleComponentLocked,
+    copySelectedComponent,
+    pasteCopiedComponent
   }
 })

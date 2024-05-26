@@ -14,20 +14,40 @@
         :type="selectedComponent?.isLocked ? 'primary' : 'default'"
       />
     </ATooltip>
+    <ATooltip title="复制">
+      <AButton shape="circle" :icon="h(CopyOutlined)" @click="copy" />
+    </ATooltip>
+    <ATooltip title="粘贴">
+      <AButton
+        shape="circle"
+        :icon="h(BlockOutlined)"
+        @click="paste"
+        :disabled="copiedComponent == null"
+      />
+    </ATooltip>
   </ASpace>
 </template>
 
 <script setup lang="ts">
 import { h } from 'vue'
-import { DeleteOutlined, EyeInvisibleOutlined, LockOutlined } from '@ant-design/icons-vue'
+import {
+  DeleteOutlined,
+  EyeInvisibleOutlined,
+  LockOutlined,
+  CopyOutlined,
+  BlockOutlined
+} from '@ant-design/icons-vue'
 import useGetComponentInfo from '@/hooks/useGetComponentInfo'
 
 const {
   removeSelectedComponent,
   changeComponentHidden,
   toggleComponentLocked,
+  copySelectedComponent,
+  pasteCopiedComponent,
   selectedComponent,
-  selectedId
+  selectedId,
+  copiedComponent
 } = useGetComponentInfo()
 
 // 删除功能
@@ -43,6 +63,16 @@ function handleHidden() {
 // 锁定功能
 function handleLock() {
   toggleComponentLocked({ fe_id: selectedId.value })
+}
+
+// 复制功能
+function copy() {
+  copySelectedComponent()
+}
+
+// 粘贴功能
+function paste() {
+  pasteCopiedComponent()
 }
 </script>
 
