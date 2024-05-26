@@ -25,10 +25,27 @@ export const useComponentsStore = defineStore('components', () => {
     selectedId.value = id
   }
 
+  // 新增 component
+  function addComponent(payload: ComponentInfoType) {
+    const newComponent = payload
+    const selectedIdVal = selectedId.value
+    const componentListVal = componentList.value
+
+    const index = componentListVal?.findIndex((c) => c.fe_id === selectedIdVal)
+    if (!index) return
+    if (index < 0) {
+      componentListVal?.push(newComponent)
+    } else {
+      componentListVal?.splice(index + 1, 0, newComponent)
+    }
+    selectedId.value = newComponent.fe_id
+  }
+
   return {
     componentList,
     selectedId,
     resetComponents,
-    changeSelectedId
+    changeSelectedId,
+    addComponent
   }
 })

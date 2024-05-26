@@ -6,7 +6,7 @@
       >{{ group.groupName }}</ATypographyTitle
     >
     <div>
-      <div v-for="c in group.components" :key="c.title" class="wrapper">
+      <div v-for="c in group.components" :key="c.title" class="wrapper" @click="handleClick(c)">
         <div class="component">
           <component :is="c.Component" />
         </div>
@@ -16,7 +16,16 @@
 </template>
 
 <script setup lang="ts">
-import { componentConfGroup } from '@/components/QuestionComponents'
+import { nanoid } from 'nanoid'
+import { componentConfGroup, type ComponentConfType } from '@/components/QuestionComponents'
+import { useComponentsStore } from '@/stores/components'
+
+const { addComponent } = useComponentsStore()
+
+function handleClick(c: ComponentConfType) {
+  const { title, type, defaultProps } = c
+  addComponent({ fe_id: nanoid(), title, type, props: defaultProps })
+}
 </script>
 
 <style scoped lang="scss">
