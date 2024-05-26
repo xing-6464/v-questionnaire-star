@@ -32,7 +32,7 @@ declare module 'vue' {
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
     ATypographyParagraph: typeof import('ant-design-vue/es')['TypographyParagraph']
     ATypographyTitle: typeof import('ant-design-vue/es')['TypographyTitle']
-    Component: typeof import('./src/components/QuestionComponents/QuestionTitle/Component.vue')['default']
+    Component: typeof import('./src/components/QuestionComponents/QuestionInput/Component.vue')['default']
     ListPage: typeof import('./src/components/ListPage.vue')['default']
     ListSearch: typeof import('./src/components/ListSearch.vue')['default']
     Logo: typeof import('./src/components/Logo.vue')['default']

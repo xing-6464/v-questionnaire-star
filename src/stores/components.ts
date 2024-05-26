@@ -8,6 +8,7 @@ export type ComponentInfoType = {
   fe_id: string
   type: string
   title: string
+  isHidden?: boolean
   props: ComponentPropsType
 }
 
@@ -71,6 +72,28 @@ export const useComponentsStore = defineStore('components', () => {
     selectedId.value = nextSelectedId
   }
 
+  // 隐藏/显示组件
+  function changeComponentHidden(payload: { isHidden: boolean }) {
+    const { isHidden } = payload
+    const componentListVal = componentList.value
+    const selectedIdVal = selectedId.value
+
+    let newSelectedId = ''
+    if (isHidden) {
+      // 隐藏当前组件
+      newSelectedId = getNextSelectedId(selectedIdVal, componentListVal!)
+    } else {
+      // 显示当前组件
+      newSelectedId = selectedIdVal
+    }
+
+    const curComp = componentListVal?.find((c) => c.fe_id === selectedIdVal)
+    if (curComp) {
+      curComp.isHidden = true
+    }
+    selectedId.value = newSelectedId
+  }
+
   return {
     componentList,
     selectedId,
@@ -79,6 +102,7 @@ export const useComponentsStore = defineStore('components', () => {
     changeSelectedId,
     addComponent,
     changeComponentProps,
-    removeSelectedComponent
+    removeSelectedComponent,
+    changeComponentHidden
   }
 })

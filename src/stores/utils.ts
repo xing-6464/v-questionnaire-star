@@ -1,20 +1,21 @@
 import { type ComponentInfoType } from './components'
 export function getNextSelectedId(fe_id: string, componentList: ComponentInfoType[]) {
-  const index = componentList.findIndex((c) => c.fe_id === fe_id)
+  const visibleComponentList = componentList.filter((c) => !c.isHidden)
+  const index = visibleComponentList.findIndex((c) => c.fe_id === fe_id)
   if (index < 0) return ''
 
   // 重新计算 selectedId
   let newSelectedId = ''
-  const length = componentList.length
+  const length = visibleComponentList.length
   if (length <= 1) {
     newSelectedId = ''
   } else {
     if (index + 1 === length) {
       // 删掉最后一个
-      newSelectedId = componentList[index - 1].fe_id
+      newSelectedId = visibleComponentList[index - 1].fe_id
     } else {
       // 正常移动
-      newSelectedId = componentList[index + 1].fe_id
+      newSelectedId = visibleComponentList[index + 1].fe_id
     }
   }
 
