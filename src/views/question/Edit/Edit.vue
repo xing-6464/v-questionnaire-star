@@ -3,7 +3,9 @@
     <div style="background-color: #fff; height: 40px">Header</div>
     <div class="content-wrapper">
       <div class="content">
-        <div class="left">left</div>
+        <div class="left">
+          <LeftPanel />
+        </div>
         <div class="main" @click="handleSelectedId">
           <div class="canvas-wrapper">
             <EditCanvas :loading="loading" />
@@ -17,8 +19,9 @@
 
 <script setup lang="ts">
 import useGetComponentInfo from '@/hooks/useGetComponentInfo'
-import EditCanvas from './EditCanvas.vue'
 import useLoadQuestionData from '@/hooks/useLoadQuestionData'
+import EditCanvas from './EditCanvas.vue'
+import LeftPanel from './LeftPanel.vue'
 
 const { loading } = useLoadQuestionData()
 const { changeSelectedId } = useGetComponentInfo()

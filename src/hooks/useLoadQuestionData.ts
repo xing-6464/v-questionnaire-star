@@ -26,7 +26,6 @@ function useLoadQuestionData() {
   watch(
     () => route.params.id,
     (newID) => {
-      console.log('newID', newID)
       run(newID as string)
     },
     {
