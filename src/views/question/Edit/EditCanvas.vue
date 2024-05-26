@@ -21,8 +21,12 @@
 <script setup lang="ts">
 import QuestionInput from '@/components/QuestionComponents/QuestionInput/Component.vue'
 import QuestionTitle from '@/components/QuestionComponents/QuestionTitle/Component.vue'
+import useGetComponentInfo from '@/hooks/useGetComponentInfo'
 
 defineProps<{ loading: boolean }>()
+
+const { componentList } = useGetComponentInfo()
+console.log(componentList.value)
 </script>
 
 <style scoped lang="scss">

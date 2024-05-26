@@ -22,26 +22,27 @@ function useLoadQuestionData() {
     }
   )
 
-  // 监听 data 变化，把 componentList 存入 store
+  // 判断 id变化，执行ajax加载问卷数据
   watch(
-    () => data,
-    (newData) => {
-      if (!newData.value) return
-      const { title = '', componentList = [] } = newData.value
-
-      // 把componentList 存入 store
-      store.resetComponents(componentList)
+    () => route.params.id,
+    (newID) => {
+      console.log('newID', newID)
+      run(newID as string)
     },
     {
       immediate: true
     }
   )
 
-  // 判断 id变化，执行ajax加载问卷数据
+  // 监听 data 变化，把 componentList 存入 store
   watch(
-    () => route.params.id,
-    (newID) => {
-      run(newID as string)
+    data,
+    (newData) => {
+      if (!newData) return
+      const { title = '', componentList = [] } = newData
+
+      // 把componentList 存入 store
+      store.resetComponents(componentList)
     },
     {
       immediate: true
