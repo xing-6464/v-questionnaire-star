@@ -2,11 +2,13 @@ import type { Component } from 'vue'
 import QuestionInputConf, { type QuestionInputPropsType } from './QuestionInput'
 import QuestionTitleConf, { type QuestionTitlePropsType } from './QuestionTitle'
 import QuestionParagraphConf, { type QuestionParagraphPropsType } from './QuestionParagraph'
+import QuestionInfoConf, { type QuestionInfoPropsType } from './QuestionInfo'
 
 // 各个组件的 prop type
 export type ComponentPropsType = QuestionInputPropsType &
   QuestionTitlePropsType &
-  QuestionParagraphPropsType
+  QuestionParagraphPropsType &
+  QuestionInfoPropsType
 
 export type ComponentConfType = {
   title: string
@@ -20,7 +22,8 @@ export type ComponentConfType = {
 const componentConfList: ComponentConfType[] = [
   QuestionInputConf,
   QuestionTitleConf,
-  QuestionParagraphConf
+  QuestionParagraphConf,
+  QuestionInfoConf
 ]
 
 // 组件分组
@@ -28,7 +31,7 @@ export const componentConfGroup = [
   {
     groupId: 'textGroup',
     groupName: '文本显示',
-    components: [QuestionTitleConf, QuestionParagraphConf]
+    components: [QuestionInfoConf, QuestionTitleConf, QuestionParagraphConf]
   },
   {
     groupId: 'inputGroup',
