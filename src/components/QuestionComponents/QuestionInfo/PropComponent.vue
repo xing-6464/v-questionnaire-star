@@ -22,12 +22,6 @@ const formState = reactive({
   desc: props.desc || ''
 })
 
-watch([() => props.title, () => props.desc], (newValue) => {
-  const [title, desc] = newValue
-  formState.title = title || ''
-  formState.desc = desc || ''
-})
-
 watch(formState, (value) => {
   emits('change', value)
 })

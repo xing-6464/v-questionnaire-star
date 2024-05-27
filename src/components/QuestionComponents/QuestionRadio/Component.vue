@@ -1,8 +1,8 @@
 <template>
   <div>
     <ATypographyParagraph strong>{{ title }}</ATypographyParagraph>
-    <ARadioGroup v-model:value="value" :vertical="isVertical">
-      <ASpace>
+    <ARadioGroup v-model:value="$props.value">
+      <ASpace :direction="isVertical ? 'vertical' : 'horizontal'">
         <ARadio v-for="(option, index) in options" :key="index" :value="option.value">
           {{ option.text }}
         </ARadio>
@@ -13,17 +13,9 @@
 
 <script setup lang="ts">
 import { type QuestionRadioPropsType, QuestionRadioDefaultProps } from './interface'
-const {
-  title: _title,
-  options: _options,
-  value: _value,
-  isVertical: _isVertical
-} = QuestionRadioDefaultProps
 
 withDefaults(defineProps<QuestionRadioPropsType>(), {
-  title: _title,
-  value: _value,
-  isVertical: _isVertical,
-  options: () => _options!
+  ...QuestionRadioDefaultProps,
+  options: () => QuestionRadioDefaultProps.options!
 })
 </script>

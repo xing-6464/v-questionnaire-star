@@ -25,11 +25,6 @@ const formState = reactive({
   isCenter: props.isCenter || false
 })
 
-watch([() => props.text, () => props.isCenter], ([text, isCenter]) => {
-  formState.text = text ? text : ''
-  formState.isCenter = isCenter ? isCenter : false
-})
-
 watch(formState, (newValue) => {
   emits('change', newValue)
 })

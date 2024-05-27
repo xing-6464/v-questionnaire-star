@@ -4,11 +4,36 @@
       <AInput v-model:value="formState.title" />
     </AFormItem>
 
+    <ASpace direction="vertical" :size="0">
+      <AFormItem
+        v-for="(option, index) in formState.options"
+        :key="index"
+        :label="index === 0 ? '选项' : ''"
+        :rules="[{ required: true, message: '请输入选项文字' }]"
+      >
+        <ASpace>
+          <AInput v-model:value="option.text" placeholder="请输入选项文字" />
+          <MinusCircleOutlined v-if="index > 1" @click="remove(option)" />
+        </ASpace>
+      </AFormItem>
+    </ASpace>
+    <AFormItem>
+      <AButton type="link" @click="add" block>
+        <PlusOutlined />
+        添加选项
+      </AButton>
+    </AFormItem>
+
     <AFormItem label="默认选中" name="value">
-      <ASelect
-        v-model:value="formState.value"
-        :options="() => formState.options.map((item) => ({ label: item.text, value: item.value }))"
-      />
+      <ASelect v-model:value="formState.value">
+        <ASelectOption
+          v-for="{ value: _value, text } in formState.options"
+          :key="_value"
+          :value="_value"
+        >
+          {{ text }}
+        </ASelectOption>
+      </ASelect>
     </AFormItem>
 
     <AFormItem label="是否垂直显示" name="isVertical">
@@ -19,6 +44,7 @@
 
 <script setup lang="ts">
 import { reactive, watch } from 'vue'
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons-vue'
 import type { QuestionRadioPropsType } from './interface'
 
 const props = defineProps<QuestionRadioPropsType>()
@@ -31,12 +57,18 @@ const formState = reactive({
   value: props.value || ''
 })
 
-watch(
-  props,
-  (newProps) => {
-    Object.assign(formState, newProps)
-    emits('change', newProps)
-  },
-  { deep: true }
-)
+watch(formState, (newValue) => {
+  emits('change', newValue)
+})
+
+function add() {
+  formState.options.push({ text: '', value: '' })
+}
+
+function remove(opt: { text: string; value: string }) {
+  const index = formState.options.indexOf(opt)
+  if (index !== -1) {
+    formState.options.splice(index, 1)
+  }
+}
 </script>

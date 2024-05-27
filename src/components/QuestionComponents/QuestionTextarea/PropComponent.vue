@@ -21,11 +21,6 @@ const formState = reactive({
   placeholder: props.placeholder || ''
 })
 
-watch([() => props.title, () => props.placeholder], ([newTitle, newPlaceholder]) => {
-  formState.title = newTitle ? newTitle : ''
-  formState.placeholder = newPlaceholder ? newPlaceholder : ''
-})
-
 watch(formState, (newState) => {
   emits('change', newState)
 })

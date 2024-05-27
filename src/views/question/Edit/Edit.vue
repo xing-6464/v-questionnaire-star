@@ -52,7 +52,7 @@ function handleSelectedId() {
       height: 100%;
 
       .left {
-        width: 285px;
+        width: 295px;
         background-color: #fff;
         padding: 0 12px;
       }
