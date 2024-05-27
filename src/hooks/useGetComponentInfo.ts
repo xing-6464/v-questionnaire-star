@@ -12,7 +12,9 @@ function useGetComponentInfo() {
     changeComponentHidden,
     toggleComponentLocked,
     copySelectedComponent,
-    pasteCopiedComponent
+    pasteCopiedComponent,
+    selectedPrevComponent,
+    selectedNextComponent
   } = store
 
   return {
@@ -27,7 +29,9 @@ function useGetComponentInfo() {
     changeComponentHidden,
     toggleComponentLocked,
     copySelectedComponent,
-    pasteCopiedComponent
+    pasteCopiedComponent,
+    selectedPrevComponent,
+    selectedNextComponent
   }
 }
 

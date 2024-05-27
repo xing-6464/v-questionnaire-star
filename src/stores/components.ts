@@ -121,6 +121,33 @@ export const useComponentsStore = defineStore('components', () => {
     insertNewComponent({ componentList, selectedId }, copiedComponentVal as ComponentInfoType)
   }
 
+  // 选中上一个
+  function selectedPrevComponent() {
+    const selectedIdVal = selectedId.value
+    const componentListVal = componentList.value
+
+    const selectedIndex = componentListVal?.findIndex((c) => c.fe_id === selectedIdVal)
+    if (selectedIndex == null) return
+    if (selectedIndex < 0) return
+    if (selectedIndex <= 0) return
+
+    selectedId.value = componentListVal?.[selectedIndex - 1].fe_id!
+  }
+
+  // 选中下一个
+  function selectedNextComponent() {
+    const selectedIdVal = selectedId.value
+    const componentListVal = componentList.value
+
+    const selectedIndex = componentListVal?.findIndex((c) => c.fe_id === selectedIdVal)
+
+    if (selectedIndex == null) return
+    if (selectedIndex < 0) return
+    if (selectedIndex + 1 === componentListVal?.length) return
+
+    selectedId.value = componentListVal?.[selectedIndex + 1].fe_id!
+  }
+
   return {
     componentList,
     selectedId,
@@ -134,6 +161,8 @@ export const useComponentsStore = defineStore('components', () => {
     changeComponentHidden,
     toggleComponentLocked,
     copySelectedComponent,
-    pasteCopiedComponent
+    pasteCopiedComponent,
+    selectedPrevComponent,
+    selectedNextComponent
   }
 })
