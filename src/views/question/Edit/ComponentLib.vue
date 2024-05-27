@@ -36,6 +36,7 @@ function handleClick(c: ComponentConfType) {
   border: 1px solid #fff;
   padding: 12px;
   border-radius: 3px;
+  background-color: rgb(243, 243, 243);
 
   &:hover {
     border-color: #d9d9d9;

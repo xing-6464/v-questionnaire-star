@@ -25,5 +25,3 @@
 import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons-vue'
 import ComponentLib from './ComponentLib.vue'
 </script>
-
-<style scoped></style>
