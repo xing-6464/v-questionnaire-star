@@ -29,9 +29,13 @@
 import useGetComponentInfo from '@/hooks/useGetComponentInfo'
 import GenComponent from './GenComponent.vue'
 
+import useBindCanvasKeyPress from '@/hooks/useBindCanvasKeyPress'
+
 defineProps<{ loading: boolean }>()
 
 const { componentList, selectedId, changeSelectedId } = useGetComponentInfo()
+// 绑定键盘事件
+useBindCanvasKeyPress()
 
 function handleClick(id: string) {
   changeSelectedId(id)
