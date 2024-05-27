@@ -9,7 +9,8 @@
         v-for="(option, index) in formState.options"
         :key="index"
         :label="index === 0 ? '选项' : ''"
-        :rules="[{ required: true, message: '请输入选项文字' }]"
+        :name="['options', index, 'text']"
+        :rules="optionRules"
       >
         <ASpace>
           <AInput v-model:value="option.text" placeholder="请输入选项文字" />
@@ -46,6 +47,29 @@
 import { reactive, watch } from 'vue'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons-vue'
 import type { QuestionRadioPropsType } from './interface'
+import { nanoid } from 'nanoid'
+import type { RuleObject } from 'ant-design-vue/es/form'
+
+const optionRules: RuleObject[] = [
+  {
+    required: true,
+    message: '请输入选项文字'
+  },
+  {
+    validator: (rule, value) => {
+      let num = 0
+      formState.options.forEach((item) => {
+        if (item.text === value) {
+          num++
+        }
+      })
+      if (num > 1) {
+        return Promise.reject('选项文字不能重复')
+      }
+      return Promise.resolve()
+    }
+  }
+]
 
 const props = defineProps<QuestionRadioPropsType>()
 const emits = defineEmits<{ change: [value: QuestionRadioPropsType] }>()
@@ -62,7 +86,7 @@ watch(formState, (newValue) => {
 })
 
 function add() {
-  formState.options.push({ text: '', value: '' })
+  formState.options.push({ text: '', value: nanoid(5) })
 }
 
 function remove(opt: { text: string; value: string }) {
