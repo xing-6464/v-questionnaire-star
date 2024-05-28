@@ -12,7 +12,9 @@
           :rules="optionRules"
         >
           <ASpace align="baseline">
-            <ACheckbox v-model:checked="option.checked" />
+            <AFormItemRest>
+              <ACheckbox v-model:checked="option.checked" />
+            </AFormItemRest>
             <AInput v-model:value="option.text" placeholder="请输入选项文字" />
             <MinusCircleOutlined v-if="index > 0" @click="remove(option)" />
           </ASpace>
