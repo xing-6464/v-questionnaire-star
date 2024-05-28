@@ -14,7 +14,8 @@ function useGetComponentInfo() {
     copySelectedComponent,
     pasteCopiedComponent,
     selectedPrevComponent,
-    selectedNextComponent
+    selectedNextComponent,
+    changeComponentTitle
   } = store
 
   return {
@@ -31,7 +32,8 @@ function useGetComponentInfo() {
     copySelectedComponent,
     pasteCopiedComponent,
     selectedPrevComponent,
-    selectedNextComponent
+    selectedNextComponent,
+    changeComponentTitle
   }
 }
 

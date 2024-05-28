@@ -148,6 +148,13 @@ export const useComponentsStore = defineStore('components', () => {
     selectedId.value = componentListVal?.[selectedIndex + 1].fe_id!
   }
 
+  // 修改组件标题
+  function changeComponentTitle(payload: { fe_id: string; title: string }) {
+    const { fe_id, title } = payload
+    const curComp = componentList.value?.find((c) => c.fe_id === fe_id)
+    if (curComp) curComp.title = title
+  }
+
   return {
     componentList,
     selectedId,
@@ -163,6 +170,7 @@ export const useComponentsStore = defineStore('components', () => {
     copySelectedComponent,
     pasteCopiedComponent,
     selectedPrevComponent,
-    selectedNextComponent
+    selectedNextComponent,
+    changeComponentTitle
   }
 })

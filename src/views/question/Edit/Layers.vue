@@ -5,7 +5,16 @@
       :class="{ selected: c.fe_id === selectedId }"
       @click="handleTitleClick(c.fe_id)"
     >
-      {{ c.title }}
+      <AInput
+        v-if="c.fe_id === changeTitleId"
+        v-model:value="c.title"
+        @change="changeTitle"
+        @press-enter="changeTitleId = ''"
+        @blur="changeTitleId = ''"
+      />
+      <template v-else>
+        {{ c.title }}
+      </template>
     </div>
     <div class="handle">按钮</div>
   </div>
@@ -14,8 +23,13 @@
 <script setup lang="ts">
 import useGetComponentInfo from '@/hooks/useGetComponentInfo'
 import { message } from 'ant-design-vue'
+import type { ChangeEvent } from 'ant-design-vue/es/_util/EventInterface'
+import { ref } from 'vue'
 
-const { componentList, selectedId, changeSelectedId } = useGetComponentInfo()
+// 记录当前正在修改标题的组件id
+const changeTitleId = ref('')
+
+const { componentList, selectedId, changeSelectedId, changeComponentTitle } = useGetComponentInfo()
 
 // 点击选中组件
 function handleTitleClick(fe_id: string) {
@@ -27,8 +41,21 @@ function handleTitleClick(fe_id: string) {
   if (fe_id !== selectedId.value) {
     // 切换选中组件
     changeSelectedId(fe_id)
+    changeTitleId.value = ''
     return
   }
+
+  // 开始修改标题
+  changeTitleId.value = fe_id
+}
+
+// 修改标题
+function changeTitle(e: ChangeEvent) {
+  const newTitle = e.target.value?.trim()
+  const selectedIdVal = selectedId.value
+  if (!newTitle) return
+  if (!selectedIdVal) return
+  changeComponentTitle({ fe_id: selectedIdVal, title: newTitle })
 }
 </script>
 
