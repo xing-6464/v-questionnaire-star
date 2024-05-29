@@ -83,12 +83,12 @@ export const useComponentsStore = defineStore('components', () => {
       // 显示当前组件
       newSelectedId = fe_id
     }
+    selectedId.value = newSelectedId
 
     const curComp = componentListVal?.find((c) => c.fe_id === fe_id)
     if (curComp) {
-      curComp.isHidden = true
+      curComp.isHidden = isHidden
     }
-    selectedId.value = newSelectedId
   }
 
   // 锁定/解锁组件

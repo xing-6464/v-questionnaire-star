@@ -16,20 +16,47 @@
         {{ c.title }}
       </template>
     </div>
-    <div class="handle">按钮</div>
+    <div class="handle">
+      <ASpace>
+        <AButton
+          size="small"
+          shape="circle"
+          :class="!c.isHidden ? 'btn' : ''"
+          :icon="h(EyeInvisibleOutlined)"
+          :type="c.isHidden ? 'primary' : 'text'"
+          @click="changeHidden(c.fe_id, !c.isHidden)"
+        />
+        <AButton
+          size="small"
+          shape="circle"
+          :class="!c.isLocked ? 'btn' : ''"
+          :icon="h(LockOutlined)"
+          :type="c.isLocked ? 'primary' : 'text'"
+          @click="changeLocked(c.fe_id)"
+        />
+      </ASpace>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, h } from 'vue'
 import useGetComponentInfo from '@/hooks/useGetComponentInfo'
 import { message } from 'ant-design-vue'
 import type { ChangeEvent } from 'ant-design-vue/es/_util/EventInterface'
-import { ref } from 'vue'
+import { EyeInvisibleOutlined, LockOutlined } from '@ant-design/icons-vue'
 
 // 记录当前正在修改标题的组件id
 const changeTitleId = ref('')
 
-const { componentList, selectedId, changeSelectedId, changeComponentTitle } = useGetComponentInfo()
+const {
+  componentList,
+  selectedId,
+  changeSelectedId,
+  changeComponentTitle,
+  toggleComponentLocked,
+  changeComponentHidden
+} = useGetComponentInfo()
 
 // 点击选中组件
 function handleTitleClick(fe_id: string) {
@@ -56,6 +83,16 @@ function changeTitle(e: ChangeEvent) {
   if (!newTitle) return
   if (!selectedIdVal) return
   changeComponentTitle({ fe_id: selectedIdVal, title: newTitle })
+}
+
+// 隐藏/显示组件
+function changeHidden(fe_id: string, isHidden: boolean) {
+  changeComponentHidden({ fe_id, isHidden })
+}
+
+// 锁定/解锁组件
+function changeLocked(fe_id: string) {
+  toggleComponentLocked({ fe_id })
 }
 </script>
 

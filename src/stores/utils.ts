@@ -1,5 +1,6 @@
 import type { Ref } from 'vue'
 import { type ComponentInfoType } from './components'
+
 export function getNextSelectedId(fe_id: string, componentList: ComponentInfoType[]) {
   const visibleComponentList = componentList.filter((c) => !c.isHidden)
   const index = visibleComponentList.findIndex((c) => c.fe_id === fe_id)
