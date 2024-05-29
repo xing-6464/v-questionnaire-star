@@ -3,11 +3,13 @@ import { useRequest } from 'vue-request'
 import { getQuestionService } from '@/services/question'
 import { watch } from 'vue'
 import { useComponentsStore } from '@/stores/components'
+import { usePageInfoStore } from '@/stores/pageInfo'
 
 function useLoadQuestionData() {
   const route = useRoute()
 
   const store = useComponentsStore()
+  const pageInfo = usePageInfoStore()
 
   // ajax 加载
   const { data, loading, error, run } = useRequest(
@@ -38,7 +40,7 @@ function useLoadQuestionData() {
     data,
     (newData) => {
       if (!newData) return
-      const { title = '', componentList = [] } = newData
+      const { title = '', desc = '', js = '', css = '', componentList = [] } = newData
 
       // 获取默认 selectedId
       let selectedId = ''
@@ -48,6 +50,9 @@ function useLoadQuestionData() {
 
       // 把componentList 存入 store
       store.resetComponents({ componentList, selectedId, copiedComponent: null })
+
+      // 把 pageInfo 存入 store
+      pageInfo.resetPageInfo({ title, desc, js, css })
     },
     {
       immediate: true
