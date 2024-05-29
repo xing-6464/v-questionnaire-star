@@ -4,7 +4,17 @@
       <div class="left">
         <ASpace>
           <AButton type="link" :icon="h(LeftOutlined)" @click="router.back()">返回</AButton>
-          <ATypographyTitle>问卷标题</ATypographyTitle>
+          <AInput
+            v-if="editTitleState"
+            v-model:value="pageInfo.title"
+            @blur="editTitleState = false"
+            @press-enter="editTitleState = false"
+            @change="handleTitleChange"
+          />
+          <ASpace v-else>
+            <ATypographyTitle>{{ pageInfo.title }}</ATypographyTitle>
+            <AButton type="text" @click="editTitleState = true" :icon="h(EditOutlined)" />
+          </ASpace>
         </ASpace>
       </div>
       <div class="main">
@@ -21,12 +31,22 @@
 </template>
 
 <script setup lang="ts">
-import { h } from 'vue'
-import { LeftOutlined } from '@ant-design/icons-vue'
+import { h, ref } from 'vue'
+import { LeftOutlined, EditOutlined } from '@ant-design/icons-vue'
 import { useRouter } from 'vue-router'
 import EditToolbar from './EditToolbar.vue'
+import useGetPageInfo from '@/hooks/useGetPageInfo'
+
+const editTitleState = ref(false)
+const { pageInfo, changePageTitle } = useGetPageInfo()
 
 const router = useRouter()
+
+function handleTitleChange(e) {
+  const title = e.target.value.trim()
+  if (!title) return
+  changePageTitle(title)
+}
 </script>
 
 <style scoped lang="scss">

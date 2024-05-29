@@ -4,11 +4,12 @@ import { storeToRefs } from 'pinia'
 function useGetPageInfo() {
   const store = usePageInfoStore()
   const { pageInfo } = storeToRefs(store)
-  const { resetPageInfo } = store
+  const { resetPageInfo, changePageTitle } = store
 
   return {
     pageInfo,
-    resetPageInfo
+    resetPageInfo,
+    changePageTitle
   }
 }
 

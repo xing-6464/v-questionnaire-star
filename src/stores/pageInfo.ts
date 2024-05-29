@@ -20,8 +20,14 @@ export const usePageInfoStore = defineStore('pageInfo', () => {
     Object.assign(pageInfo, payload)
   }
 
+  // 修改标题
+  function changePageTitle(title: string) {
+    pageInfo.title = title
+  }
+
   return {
     pageInfo,
-    resetPageInfo
+    resetPageInfo,
+    changePageTitle
   }
 })
