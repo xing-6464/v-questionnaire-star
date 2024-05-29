@@ -22,7 +22,9 @@
       </div>
       <div class="right">
         <ASpace>
-          <AButton>保存</AButton>
+          <AButton :loading="loading" @click="save" :icon="!loading ? h(SaveOutlined) : null">
+            保存
+          </AButton>
           <AButton type="primary">发布</AButton>
         </ASpace>
       </div>
@@ -32,16 +34,43 @@
 
 <script setup lang="ts">
 import { h, ref } from 'vue'
-import { LeftOutlined, EditOutlined } from '@ant-design/icons-vue'
-import { useRouter } from 'vue-router'
+import { LeftOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons-vue'
+import { useRouter, useRoute } from 'vue-router'
+import { useRequest } from 'vue-request'
+import { message } from 'ant-design-vue'
+
 import EditToolbar from './EditToolbar.vue'
 import useGetPageInfo from '@/hooks/useGetPageInfo'
+import { updateQuestionService } from '@/services/question'
+import useGetComponentInfo from '../../../hooks/useGetComponentInfo'
 
 const editTitleState = ref(false)
+const { componentList } = useGetComponentInfo()
 const { pageInfo, changePageTitle } = useGetPageInfo()
 
 const router = useRouter()
+const route = useRoute()
 
+// 保存
+const { loading, run: save } = useRequest(
+  async () => {
+    await updateQuestionService(route.params.id, { ...pageInfo.value, componentList })
+  },
+  {
+    manual: true,
+    onSuccess: () => {
+      message.success('保存成功')
+    }
+  }
+)
+
+// 快捷键保存
+// useKeyPress(['ctrl.c', 'mate.c'], (e: KeyboardEvent) => {
+//   e.preventDefault()
+//   if (!loading) save()
+// })
+
+// 修改标题
 function handleTitleChange(e) {
   const title = e.target.value.trim()
   if (!title) return
