@@ -18,7 +18,14 @@
           </div>
         </template>
         <template v-else>
-          <div class="left">left</div>
+          <div class="left">
+            <ComponentList
+              :selectedComponentId="selectedComponentId"
+              :selectedComponentType="selectedComponentType"
+              @change-selected-component-id="handleChangeId"
+              @change-selected-component-type="handleChangeType"
+            />
+          </div>
           <div class="main">main</div>
           <div class="right">right</div>
         </template>
@@ -28,11 +35,23 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import useLoadQuestionData from '@/hooks/useLoadQuestionData'
 import useGetPageInfo from '@/hooks/useGetPageInfo'
 import StatHeader from './StatHeader.vue'
+import ComponentList from './ComponentList.vue'
 
 defineProps<{ id: string }>()
+const selectedComponentId = ref('')
+const selectedComponentType = ref('')
+
+function handleChangeId(id: string) {
+  selectedComponentId.value = id
+}
+
+function handleChangeType(type: string) {
+  selectedComponentType.value = type
+}
 
 const { loading } = useLoadQuestionData()
 const { pageInfo } = useGetPageInfo()
