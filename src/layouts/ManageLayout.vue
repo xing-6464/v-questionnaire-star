@@ -64,7 +64,7 @@ const title = computed(() => {
       ? '小星问卷 - 星标问卷'
       : route.path.startsWith('/manage/trash')
         ? '小星问卷 - 回收站'
-        : '小星问卷'
+        : ''
 })
 const { loading, run: handleCreateClick } = useRequest(createQuestionService, {
   manual: true,

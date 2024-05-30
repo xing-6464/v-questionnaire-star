@@ -43,7 +43,9 @@ import {
   CopyOutlined,
   BlockOutlined,
   UpOutlined,
-  DownOutlined
+  DownOutlined,
+  RedoOutlined,
+  UndoOutlined
 } from '@ant-design/icons-vue'
 import useGetComponentInfo from '@/hooks/useGetComponentInfo'
 

@@ -66,7 +66,8 @@ const router = createRouter({
         },
         {
           path: 'stat/:id',
-          component: Stat
+          component: Stat,
+          props: true
         }
       ]
     }

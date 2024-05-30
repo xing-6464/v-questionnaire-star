@@ -12,9 +12,22 @@
 <script lang="ts" setup>
 import useLoadUserData from '@/hooks/useLoadUserData'
 import useRouterPage from '@/hooks/useRouterPage'
-import { RouterView } from 'vue-router'
+import { useTitle } from '@vueuse/core'
+import { computed } from 'vue'
+import { RouterView, useRoute } from 'vue-router'
+import useGetPageInfo from '@/hooks/useGetPageInfo'
 
+const { pageInfo } = useGetPageInfo()
 const { waitingUserData } = useLoadUserData()
+const route = useRoute()
+const titleComputed = computed(() => {
+  return route.path.startsWith('/question/edit')
+    ? `编辑问卷 - ${pageInfo.value.title}`
+    : route.path.startsWith('/question/stat')
+      ? '问卷统计'
+      : '问卷'
+})
+useTitle(titleComputed)
 useRouterPage(waitingUserData)
 </script>
 

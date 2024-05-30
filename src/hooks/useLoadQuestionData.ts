@@ -40,7 +40,14 @@ function useLoadQuestionData() {
     data,
     (newData) => {
       if (!newData) return
-      const { title = '', desc = '', js = '', css = '', componentList = [] } = newData
+      const {
+        title = '',
+        desc = '',
+        js = '',
+        css = '',
+        isPublished = false,
+        componentList = []
+      } = newData
 
       // 获取默认 selectedId
       let selectedId = ''
@@ -52,7 +59,7 @@ function useLoadQuestionData() {
       store.resetComponents({ componentList, selectedId, copiedComponent: null })
 
       // 把 pageInfo 存入 store
-      pageInfo.resetPageInfo({ title, desc, js, css })
+      pageInfo.resetPageInfo({ title, desc, js, css, isPublished })
     },
     {
       immediate: true
