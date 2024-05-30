@@ -6,7 +6,7 @@ export type PageInfoType = {
   desc?: string
   js?: string
   css?: string
-  isPublished: boolean
+  isPublished?: boolean
 }
 
 export const usePageInfoStore = defineStore('pageInfo', () => {
@@ -14,8 +14,7 @@ export const usePageInfoStore = defineStore('pageInfo', () => {
     title: '',
     desc: '',
     js: '',
-    css: '',
-    isPublished: false
+    css: ''
   })
 
   function resetPageInfo(payload: PageInfoType) {
