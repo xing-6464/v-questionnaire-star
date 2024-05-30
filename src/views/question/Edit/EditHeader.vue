@@ -22,10 +22,14 @@
       </div>
       <div class="right">
         <ASpace>
-          <AButton :loading="loading" @click="save" :icon="!loading ? h(SaveOutlined) : null">
+          <AButton
+            :loading="saveLoading"
+            @click="save"
+            :icon="!saveLoading ? h(SaveOutlined) : null"
+          >
             保存
           </AButton>
-          <AButton type="primary">发布</AButton>
+          <AButton type="primary" @click="pub" :loading="pubLoading">发布</AButton>
         </ASpace>
       </div>
     </div>
@@ -54,7 +58,7 @@ const router = useRouter()
 const route = useRoute()
 
 // 保存
-const { loading, run: save } = useRequest(
+const { loading: saveLoading, run: save } = useRequest(
   async () => {
     await updateQuestionService(route.params.id, {
       ...pageInfo.value,
@@ -62,9 +66,23 @@ const { loading, run: save } = useRequest(
     })
   },
   {
+    manual: true
+  }
+)
+// 发布
+const { loading: pubLoading, run: pub } = useRequest(
+  async () => {
+    await updateQuestionService(route.params.id, {
+      ...pageInfo.value,
+      componentList: componentList.value,
+      isPublished: true // 发布
+    })
+  },
+  {
     manual: true,
     onSuccess: () => {
-      message.success('保存成功')
+      message.success('发布成功')
+      router.push(`/question/stat/${route.params.id}`)
     }
   }
 )
@@ -81,7 +99,7 @@ watchDebounced(
 // 快捷键保存
 useKeyPress(['ctrl.s', 'mate.s'], (e: KeyboardEvent) => {
   e.preventDefault()
-  if (!loading.value) save()
+  if (!saveLoading.value) save()
 })
 
 // 修改标题
