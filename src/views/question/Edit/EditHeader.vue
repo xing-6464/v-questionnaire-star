@@ -38,6 +38,8 @@ import { LeftOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons-vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useRequest } from 'vue-request'
 import { message } from 'ant-design-vue'
+import { useKeyPress } from 'vue-hooks-plus'
+import { watchDebounced } from '@vueuse/core'
 
 import EditToolbar from './EditToolbar.vue'
 import useGetPageInfo from '@/hooks/useGetPageInfo'
@@ -54,7 +56,10 @@ const route = useRoute()
 // 保存
 const { loading, run: save } = useRequest(
   async () => {
-    await updateQuestionService(route.params.id, { ...pageInfo.value, componentList })
+    await updateQuestionService(route.params.id, {
+      ...pageInfo.value,
+      componentList: componentList.value
+    })
   },
   {
     manual: true,
@@ -64,11 +69,20 @@ const { loading, run: save } = useRequest(
   }
 )
 
+// 自动保存
+watchDebounced(
+  [componentList, pageInfo],
+  () => {
+    save()
+  },
+  { deep: true, debounce: 1000 }
+)
+
 // 快捷键保存
-// useKeyPress(['ctrl.c', 'mate.c'], (e: KeyboardEvent) => {
-//   e.preventDefault()
-//   if (!loading) save()
-// })
+useKeyPress(['ctrl.s', 'mate.s'], (e: KeyboardEvent) => {
+  e.preventDefault()
+  if (!loading.value) save()
+})
 
 // 修改标题
 function handleTitleChange(e) {
