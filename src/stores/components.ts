@@ -4,7 +4,7 @@ import cloneDeep from 'lodash.clonedeep'
 import { nanoid } from 'nanoid'
 
 import { type ComponentPropsType } from '@/components/QuestionComponents'
-import { getNextSelectedId, insertNewComponent } from './utils'
+import { getNextSelectedId, insertNewComponent, moveArray } from './utils'
 
 export type ComponentInfoType = {
   fe_id: string
@@ -155,6 +155,13 @@ export const useComponentsStore = defineStore('components', () => {
     if (curComp) curComp.title = title
   }
 
+  // 移动组件
+  function moveComponent(payload: { fromIndex: number; toIndex: number }) {
+    const { fromIndex, toIndex } = payload
+
+    componentList.value = moveArray(componentList.value!, fromIndex, toIndex)
+  }
+
   return {
     componentList,
     selectedId,
@@ -171,6 +178,7 @@ export const useComponentsStore = defineStore('components', () => {
     pasteCopiedComponent,
     selectedPrevComponent,
     selectedNextComponent,
-    changeComponentTitle
+    changeComponentTitle,
+    moveComponent
   }
 })

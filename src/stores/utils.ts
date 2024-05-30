@@ -40,3 +40,11 @@ export function insertNewComponent(
   }
   state.selectedId.value = newComponent.fe_id
 }
+
+export function moveArray(arr: any[], fromIndex: number, toIndex: number) {
+  const mid = arr[fromIndex]
+  arr[fromIndex] = arr[toIndex]
+  arr[toIndex] = mid
+
+  return arr
+}
