@@ -4,10 +4,25 @@
       <div class="left">
         <ASpace>
           <AButton type="link" :icon="h(LeftOutlined)" @click="$router.back()">返回</AButton>
-          <ATypographyTitle>统计</ATypographyTitle>
+          <ATypographyTitle>{{ pageInfo.title }}</ATypographyTitle>
         </ASpace>
       </div>
-      <div class="main">中间</div>
+      <div class="main">
+        <template v-if="pageInfo.isPublished">
+          <ASpace>
+            <AInput ref="urlInputRef" :default-value="url" />
+            <ATooltip content="复制链接">
+              <AButton :icon="h(CopyOutlined)" @click="copy" />
+            </ATooltip>
+            <APopover>
+              <template #content>
+                <a-qrcode :value="url" :size="150" />
+              </template>
+              <AButton :icon="h(QrcodeOutlined)" />
+            </APopover>
+          </ASpace>
+        </template>
+      </div>
       <div class="right">
         <AButton type="primary" @click="() => $router.push(`/question/edit/${$route.params.id}`)">
           编辑问卷
@@ -18,8 +33,26 @@
 </template>
 
 <script setup lang="ts">
-import { h } from 'vue'
-import { LeftOutlined } from '@ant-design/icons-vue'
+import { h, ref } from 'vue'
+import { message } from 'ant-design-vue'
+import { useRoute } from 'vue-router'
+import { LeftOutlined, CopyOutlined, QrcodeOutlined } from '@ant-design/icons-vue'
+import useGetPageInfo from '@/hooks/useGetPageInfo'
+import type { InputRef } from 'ant-design-vue/es/vc-input/inputProps'
+
+const { pageInfo } = useGetPageInfo()
+const route = useRoute()
+
+const url = `http://localhost:3000/qeustion/${route.params.id}`
+
+const urlInputRef = ref<InputRef | null>(null)
+function copy() {
+  const el = urlInputRef.value
+  if (el == null) return
+  el.select()
+  document.execCommand('copy')
+  message.success('链接已复制')
+}
 </script>
 
 <style scoped lang="scss">
