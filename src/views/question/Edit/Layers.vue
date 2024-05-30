@@ -1,48 +1,51 @@
 <template>
-  <div v-for="c in componentList" :key="c.fe_id" class="wrapper">
-    <div
-      class="title"
-      :class="{ selected: c.fe_id === selectedId }"
-      @click="handleTitleClick(c.fe_id)"
-    >
-      <AInput
-        v-if="c.fe_id === changeTitleId"
-        v-model:value="c.title"
-        @change="changeTitle"
-        @press-enter="changeTitleId = ''"
-        @blur="changeTitleId = ''"
-      />
-      <template v-else>
-        {{ c.title }}
-      </template>
-    </div>
-    <div class="handle">
-      <ASpace>
-        <AButton
-          size="small"
-          shape="circle"
-          :class="!c.isHidden ? 'btn' : ''"
-          :icon="h(EyeInvisibleOutlined)"
-          :type="c.isHidden ? 'primary' : 'text'"
-          @click="changeHidden(c.fe_id, !c.isHidden)"
+  <VueDraggable v-model="componentList" :animation="100">
+    <div v-for="c in componentList" :key="c.fe_id" class="wrapper">
+      <div
+        class="title"
+        :class="{ selected: c.fe_id === selectedId }"
+        @click="handleTitleClick(c.fe_id)"
+      >
+        <AInput
+          v-if="c.fe_id === changeTitleId"
+          v-model:value="c.title"
+          @change="changeTitle"
+          @press-enter="changeTitleId = ''"
+          @blur="changeTitleId = ''"
         />
-        <AButton
-          size="small"
-          shape="circle"
-          :class="!c.isLocked ? 'btn' : ''"
-          :icon="h(LockOutlined)"
-          :type="c.isLocked ? 'primary' : 'text'"
-          @click="changeLocked(c.fe_id)"
-        />
-      </ASpace>
+        <template v-else>
+          {{ c.title }}
+        </template>
+      </div>
+      <div class="handle">
+        <ASpace>
+          <AButton
+            size="small"
+            shape="circle"
+            :class="!c.isHidden ? 'btn' : ''"
+            :icon="h(EyeInvisibleOutlined)"
+            :type="c.isHidden ? 'primary' : 'text'"
+            @click="changeHidden(c.fe_id, !c.isHidden)"
+          />
+          <AButton
+            size="small"
+            shape="circle"
+            :class="!c.isLocked ? 'btn' : ''"
+            :icon="h(LockOutlined)"
+            :type="c.isLocked ? 'primary' : 'text'"
+            @click="changeLocked(c.fe_id)"
+          />
+        </ASpace>
+      </div>
     </div>
-  </div>
+  </VueDraggable>
 </template>
 
 <script setup lang="ts">
 import { ref, h } from 'vue'
 import useGetComponentInfo from '@/hooks/useGetComponentInfo'
 import { message } from 'ant-design-vue'
+import { VueDraggable } from 'vue-draggable-plus'
 import type { ChangeEvent } from 'ant-design-vue/es/_util/EventInterface'
 import { EyeInvisibleOutlined, LockOutlined } from '@ant-design/icons-vue'
 

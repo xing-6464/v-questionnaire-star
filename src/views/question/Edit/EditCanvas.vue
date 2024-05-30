@@ -5,27 +5,30 @@
     </div>
   </template>
   <div v-else class="canvas">
-    <template
-      v-for="component in componentList?.filter((c: any) => !c.isHidden)"
-      :key="component.fe_id"
-    >
-      <div
-        :class="{
-          'component-wrapper': true,
-          selected: component.fe_id === selectedId,
-          locked: component.isLocked
-        }"
-        @click.stop="handleClick(component.fe_id)"
+    <VueDraggable v-model="componentList" :animation="100">
+      <template
+        v-for="component in componentList?.filter((c: any) => !c.isHidden)"
+        :key="component.fe_id"
       >
-        <div class="component">
-          <GenComponent :component-info="component" />
+        <div
+          :class="{
+            'component-wrapper': true,
+            selected: component.fe_id === selectedId,
+            locked: component.isLocked
+          }"
+          @click.stop="handleClick(component.fe_id)"
+        >
+          <div class="component">
+            <GenComponent :component-info="component" />
+          </div>
         </div>
-      </div>
-    </template>
+      </template>
+    </VueDraggable>
   </div>
 </template>
 
 <script setup lang="ts">
+import { VueDraggable } from 'vue-draggable-plus'
 import useGetComponentInfo from '@/hooks/useGetComponentInfo'
 import GenComponent from './GenComponent.vue'
 
