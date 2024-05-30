@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div>Header</div>
+    <StatHeader />
     <div class="content-wrapper">
       <template v-if="loading">
         <div style="text-align: center; margin-top: 60px">
@@ -30,6 +30,7 @@
 <script setup lang="ts">
 import useLoadQuestionData from '@/hooks/useLoadQuestionData'
 import useGetPageInfo from '@/hooks/useGetPageInfo'
+import StatHeader from './StatHeader.vue'
 
 defineProps<{ id: string }>()
 
