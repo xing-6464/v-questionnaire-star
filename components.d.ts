@@ -43,6 +43,7 @@ declare module 'vue' {
     Component: typeof import('./src/components/QuestionComponents/QuestionCheckbox/Component.vue')['default']
     ListPage: typeof import('./src/components/ListPage.vue')['default']
     ListSearch: typeof import('./src/components/ListSearch.vue')['default']
+    Loading: typeof import('./src/components/Loading.vue')['default']
     Logo: typeof import('./src/components/Logo.vue')['default']
     PropComponent: typeof import('./src/components/QuestionComponents/QuestionCheckbox/PropComponent.vue')['default']
     QuestionCard: typeof import('./src/components/QuestionCard.vue')['default']

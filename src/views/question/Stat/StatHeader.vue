@@ -10,7 +10,7 @@
       <div class="main">
         <template v-if="pageInfo.isPublished">
           <ASpace>
-            <AInput ref="urlInputRef" :default-value="url" />
+            <AInput ref="urlInputRef" :default-value="url" style="width: 300px" />
             <ATooltip content="复制链接">
               <AButton :icon="h(CopyOutlined)" @click="copy" />
             </ATooltip>

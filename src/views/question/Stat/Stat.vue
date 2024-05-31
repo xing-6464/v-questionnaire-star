@@ -26,7 +26,14 @@
               @change-selected-component-type="handleChangeType"
             />
           </div>
-          <div class="main">main</div>
+          <div class="main">
+            <PageStat
+              :selectedComponentId="selectedComponentId"
+              :selectedComponentType="selectedComponentType"
+              @change-selected-component-id="handleChangeId"
+              @change-selected-component-type="handleChangeType"
+            />
+          </div>
           <div class="right">right</div>
         </template>
       </div>
@@ -40,6 +47,7 @@ import useLoadQuestionData from '@/hooks/useLoadQuestionData'
 import useGetPageInfo from '@/hooks/useGetPageInfo'
 import StatHeader from './StatHeader.vue'
 import ComponentList from './ComponentList.vue'
+import PageStat from './PageStat.vue'
 
 defineProps<{ id: string }>()
 const selectedComponentId = ref('')

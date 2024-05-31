@@ -24,12 +24,10 @@
 <script setup lang="ts">
 import useGetComponentInfo from '@/hooks/useGetComponentInfo'
 import GenComponent from '../Edit/GenComponent.vue'
+import type { PropsType, EmitsType } from './types'
 
-defineProps<{
-  selectedComponentId: string
-  selectedComponentType: string
-}>()
-defineEmits(['changeSelectedComponentId', 'changeSelectedComponentType'])
+defineProps<PropsType>()
+defineEmits<EmitsType>()
 
 const { componentList } = useGetComponentInfo()
 </script>
