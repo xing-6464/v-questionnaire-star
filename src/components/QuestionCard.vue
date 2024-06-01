@@ -36,6 +36,7 @@
             size="small"
             type="text"
             @click="() => router.push(`/question/stat/${_id}`)"
+            :disabled="!isPublished"
           >
             数据统计
           </a-button>

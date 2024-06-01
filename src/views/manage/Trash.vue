@@ -89,8 +89,8 @@ const tableColumns = [
   },
   {
     title: '创建时间',
-    dataIndex: 'createAt',
-    key: 'createAt'
+    dataIndex: 'createdAt',
+    key: 'createdAt'
   }
 ]
 
