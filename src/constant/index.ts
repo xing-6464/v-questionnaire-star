@@ -1,4 +1,5 @@
 export const PAGE_SIZE = 10
+export const STAT_PAGE_SIZE = 10
 
 export const LIST_SEARCH_PARAM_KEY = 'keyword'
 export const LIST_PAGE_PARAM_KEY = 'page'
