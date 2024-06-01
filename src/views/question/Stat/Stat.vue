@@ -34,7 +34,12 @@
               @change-selected-component-type="handleChangeType"
             />
           </div>
-          <div class="right">right</div>
+          <div class="right">
+            <ChartStat
+              :selectedComponentId="selectedComponentId"
+              :selectedComponentType="selectedComponentType"
+            />
+          </div>
         </template>
       </div>
     </div>
@@ -48,6 +53,7 @@ import useGetPageInfo from '@/hooks/useGetPageInfo'
 import StatHeader from './StatHeader.vue'
 import ComponentList from './ComponentList.vue'
 import PageStat from './PageStat.vue'
+import ChartStat from './ChartStat.vue'
 
 defineProps<{ id: string }>()
 const selectedComponentId = ref('')
