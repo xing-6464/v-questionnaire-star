@@ -3,7 +3,9 @@ import { message } from 'ant-design-vue'
 import axios from 'axios'
 
 const instance = axios.create({
-  timeout: 10 * 1000
+  baseURL: 'http://localhost:3005/',
+  timeout: 10 * 1000,
+  headers: {}
 })
 
 // request 拦截器 每次请求带上token

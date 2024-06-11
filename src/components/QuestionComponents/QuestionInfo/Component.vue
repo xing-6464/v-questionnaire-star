@@ -14,6 +14,7 @@
 import { computed } from 'vue'
 import { type QuestionInfoPropsType, QuestionInfoDefaultProps } from './interface'
 
+defineOptions({ name: 'QuestionInfo' })
 const props = withDefaults(defineProps<QuestionInfoPropsType>(), {
   ...QuestionInfoDefaultProps
 })

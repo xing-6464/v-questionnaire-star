@@ -82,7 +82,7 @@ const { run } = useRequest(
       // 存储 token
       setToken(token)
       message.success('登录成功')
-      router.push(MANAGE_INDEX_PATHNAME)
+      router.push('/')
     }
   }
 )

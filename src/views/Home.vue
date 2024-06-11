@@ -15,10 +15,12 @@
 </template>
 
 <script lang="ts" setup>
+import useLoadUserData from '@/hooks/useLoadUserData'
 import { MANAGE_INDEX_PATHNAME } from '@/router'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+useLoadUserData()
 </script>
 
 <style lang="scss" scoped>

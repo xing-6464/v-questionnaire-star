@@ -127,7 +127,7 @@ const { loading: duplicateLoading, run: duplicate } = useRequest(
   {
     manual: true,
     onSuccess(res) {
-      router.push(`/question/edit/${res.id}`)
+      router.push(`/question/edit/${res.id || res._id}`)
       message.success('复制成功')
     }
   }

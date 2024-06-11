@@ -14,6 +14,7 @@
 import { reactive, watch } from 'vue'
 import { type QuestionInfoPropsType } from './interface'
 
+defineOptions({ name: 'QuestionInfoProp' })
 const props = defineProps<QuestionInfoPropsType>()
 const emits = defineEmits<{ change: [value: QuestionInfoPropsType] }>()
 

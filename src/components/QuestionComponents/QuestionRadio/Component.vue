@@ -14,6 +14,7 @@
 <script setup lang="ts">
 import { type QuestionRadioPropsType, QuestionRadioDefaultProps } from './interface'
 
+defineOptions({ name: 'QuestionRadio' })
 withDefaults(defineProps<QuestionRadioPropsType>(), {
   ...QuestionRadioDefaultProps,
   options: () => QuestionRadioDefaultProps.options!

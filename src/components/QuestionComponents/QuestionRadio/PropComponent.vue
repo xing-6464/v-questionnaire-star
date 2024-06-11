@@ -71,6 +71,8 @@ const optionRules: RuleObject[] = [
   }
 ]
 
+defineOptions({ name: 'QuestionRadioProp' })
+
 const props = defineProps<QuestionRadioPropsType>()
 const emits = defineEmits<{ change: [value: QuestionRadioPropsType] }>()
 

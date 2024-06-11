@@ -11,6 +11,7 @@
 import { computed } from 'vue'
 import { type QuestionParagraphPropsType, QuestionParagraphDefaultProps } from './interface'
 
+defineOptions({ name: 'QuestionParagraph' })
 const props = withDefaults(defineProps<QuestionParagraphPropsType>(), {
   ...QuestionParagraphDefaultProps
 })

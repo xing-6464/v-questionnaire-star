@@ -71,7 +71,7 @@ const { run: load, loading } = useRequest(
   {
     manual: true,
     onSuccess: (res) => {
-      const { list: l = [], total: t = 0 } = res
+      const { list: l = [], count: t = 0 } = res
       list.value = list.value.concat(l)
       total.value = t
       page.value += 1

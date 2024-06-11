@@ -12,6 +12,7 @@
 <script setup lang="ts">
 import { type QuestionCheckboxPropsType, QuestionCheckboxDefaultProps } from './interface'
 
+defineOptions({ name: 'QuestionCheckbox' })
 withDefaults(defineProps<QuestionCheckboxPropsType>(), {
   ...QuestionCheckboxDefaultProps,
   list: () => QuestionCheckboxDefaultProps.list!

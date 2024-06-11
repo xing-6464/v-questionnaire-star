@@ -13,6 +13,7 @@
 import { reactive, watch } from 'vue'
 import { type QuestionInputPropsType } from './interface'
 
+defineOptions({ name: 'QuestionInputProp' })
 const props = defineProps<QuestionInputPropsType>()
 const emits = defineEmits<{ change: [newProps: QuestionInputPropsType] }>()
 

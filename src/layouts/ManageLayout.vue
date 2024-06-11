@@ -69,7 +69,7 @@ const title = computed(() => {
 const { loading, run: handleCreateClick } = useRequest(createQuestionService, {
   manual: true,
   onSuccess(res) {
-    router.push(`/question/edit/${res.id}`)
+    router.push(`/question/edit/${res.id || res._id}`)
     message.success('创建成功')
   }
 })

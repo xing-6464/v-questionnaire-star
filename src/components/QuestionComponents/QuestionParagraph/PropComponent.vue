@@ -17,6 +17,7 @@
 import { reactive, watch } from 'vue'
 import { type QuestionParagraphPropsType } from './interface'
 
+defineOptions({ name: 'QuestionParagraphProp' })
 const props = defineProps<QuestionParagraphPropsType>()
 const emits = defineEmits<{ change: [newProps: QuestionParagraphPropsType] }>()
 

@@ -13,6 +13,7 @@
 import { reactive, watch } from 'vue'
 import { type QuestionTextareaPropsType } from './interface'
 
+defineOptions({ name: 'QuestionTextareaProp' })
 const props = defineProps<QuestionTextareaPropsType>()
 const emits = defineEmits<{ change: [newProps: QuestionTextareaPropsType] }>()
 

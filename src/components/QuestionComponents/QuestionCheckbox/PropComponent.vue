@@ -62,6 +62,7 @@ const optionRules: RuleObject[] = [
   }
 ]
 
+defineOptions({ name: 'QuestionCheckboxProp' })
 const props = defineProps<QuestionCheckboxPropsType>()
 const emits = defineEmits<{ change: [value: QuestionCheckboxPropsType] }>()
 
