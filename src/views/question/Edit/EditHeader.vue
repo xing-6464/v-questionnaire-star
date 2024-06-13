@@ -60,7 +60,7 @@ const route = useRoute()
 // 保存
 const { loading: saveLoading, run: save } = useRequest(
   async () => {
-    await updateQuestionService(route.params.id, {
+    await updateQuestionService(route.params.id as string, {
       ...pageInfo.value,
       componentList: componentList.value
     })
@@ -72,7 +72,7 @@ const { loading: saveLoading, run: save } = useRequest(
 // 发布
 const { loading: pubLoading, run: pub } = useRequest(
   async () => {
-    await updateQuestionService(route.params.id, {
+    await updateQuestionService(route.params.id as string, {
       ...pageInfo.value,
       componentList: componentList.value,
       isPublished: true // 发布
@@ -103,7 +103,7 @@ useKeyPress(['ctrl.s', 'mate.s'], (e: KeyboardEvent) => {
 })
 
 // 修改标题
-function handleTitleChange(e) {
+function handleTitleChange(e: any) {
   const title = e.target.value.trim()
   if (!title) return
   changePageTitle(title)
