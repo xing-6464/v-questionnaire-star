@@ -10,7 +10,7 @@
       <div class="main">
         <template v-if="pageInfo.isPublished">
           <ASpace>
-            <AInput ref="urlInputRef" :default-value="url" style="width: 300px" />
+            <AInput ref="urlInputRef" :value="url" style="width: 300px" />
             <ATooltip content="复制链接">
               <AButton :icon="h(CopyOutlined)" @click="copy" />
             </ATooltip>
@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { h, ref } from 'vue'
+import { computed, h, ref } from 'vue'
 import { message } from 'ant-design-vue'
 import { useRoute } from 'vue-router'
 import { LeftOutlined, CopyOutlined, QrcodeOutlined } from '@ant-design/icons-vue'
@@ -43,7 +43,7 @@ import type { InputRef } from 'ant-design-vue/es/vc-input/inputProps'
 const { pageInfo } = useGetPageInfo()
 const route = useRoute()
 
-const url = `http://localhost:3000/qeustion/${route.params.id}`
+const url = computed(() => `http://1.94.45.254:8001/question/${route.params.id}`)
 
 const urlInputRef = ref<InputRef | null>(null)
 function copy() {
