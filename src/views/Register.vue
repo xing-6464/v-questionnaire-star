@@ -62,7 +62,11 @@ const formState = reactive<FormState>({
 })
 
 const rules: Record<string, Rule[]> = {
-  username: [{ required: true, message: '请输入用户名' }],
+  username: [
+    { required: true, message: '请输入用户名' },
+    { type: 'string', min: 5, max: 20, message: '长度在5-20个字符之间' },
+    { pattern: /^\w+$/, message: '只能字母、数字和下划线' }
+  ],
   password: [{ required: true, message: '请输入密码' }],
   nickname: [{ required: true, message: '请输入昵称' }],
   confirmPassword: [

@@ -3,7 +3,7 @@ import { message } from 'ant-design-vue'
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL: 'http://1.94.45.254:8080/',
+  baseURL: 'http://api.ixing.xyz/',
   timeout: 10 * 1000,
   headers: {}
 })

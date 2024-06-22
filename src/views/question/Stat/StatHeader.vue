@@ -43,7 +43,7 @@ import type { InputRef } from 'ant-design-vue/es/vc-input/inputProps'
 const { pageInfo } = useGetPageInfo()
 const route = useRoute()
 
-const url = computed(() => `http://1.94.45.254:8001/question/${route.params.id}`)
+const url = computed(() => `http://question.ixing.xyz/question/${route.params.id}`)
 
 const urlInputRef = ref<InputRef | null>(null)
 function copy() {

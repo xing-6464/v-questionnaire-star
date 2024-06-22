@@ -83,6 +83,9 @@ const { run } = useRequest(
       setToken(token)
       message.success('登录成功')
       router.push('/')
+    },
+    onError(err) {
+      message.error('登录失败，请检查用户名和密码')
     }
   }
 )

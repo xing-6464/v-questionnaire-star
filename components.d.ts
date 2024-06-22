@@ -49,7 +49,7 @@ declare module 'vue' {
     QuestionCard: typeof import('./src/components/QuestionCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    StatComponent: typeof import('./src/components/QuestionComponents/QuestionRadio/StatComponent.vue')['default']
+    StatComponent: typeof import('./src/components/QuestionComponents/QuestionCheckbox/StatComponent.vue')['default']
     UserInfo: typeof import('./src/components/UserInfo.vue')['default']
   }
 }
