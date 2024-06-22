@@ -25,7 +25,8 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  }
+  },
+  base: 'http://vquestion.ixing.xyz'
   // server: {
   //   proxy: {
   //     '/api': {
